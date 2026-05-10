@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ckb">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RikFit Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --bg:#07090E;--card:#0E1117;--card2:#161B24;--border:#1E2530;
+      --blue:#0EA5E9;--blue-dim:rgba(14,165,233,0.12);
+      --green:#10B981;--green-dim:rgba(16,185,129,0.12);
+      --purple:#8B5CF6;--purple-dim:rgba(139,92,246,0.12);
+      --orange:#F59E0B;--red:#EF4444;--red-dim:rgba(239,68,68,0.1);
+      --text:#F0F6FC;--text2:#8B949E;--text3:#3D4450;
+    }
+    body{background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh;}
+
+    /* ── LOADING ── */
+    .loading-screen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+    .spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;}
+    .loading-screen p{color:var(--text2);font-size:15px;}
+
+    /* ── LOGIN ── */
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+    .login-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px 32px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+    .login-logo{text-align:center;margin-bottom:28px;}
+    .login-logo .icon{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px;box-shadow:0 0 30px rgba(14,165,233,0.2);}
+    .login-logo h1{font-size:24px;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#fff,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .login-logo p{color:var(--text2);font-size:13px;margin-top:4px;}
+    .form-group{margin-bottom:16px;}
+    .form-label{display:block;font-size:12px;color:var(--text2);margin-bottom:7px;font-weight:700;}
+    .form-input{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:12px;padding:13px 15px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:15px;outline:none;direction:rtl;transition:border-color 0.2s;}
+    .form-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-dim);}
+    .form-input::placeholder{color:var(--text3);}
+    .btn-login{width:100%;padding:15px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--blue),#0077B6);color:#fff;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(14,165,233,0.3);}
+    .btn-login:hover{transform:translateY(-2px);}
+    .btn-login:disabled{opacity:0.6;transform:none;cursor:not-allowed;}
+    .login-err{background:var(--red-dim);border:1px solid rgba(239,68,68,0.2);color:#FCA5A5;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:14px;display:none;}
+
+    /* ── MAIN LAYOUT ── */
+    .main{display:none;}
+    .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+    .tb-left{display:flex;align-items:center;gap:12px;}
+    .tb-logo{font-size:18px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#fff,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .tb-badge{background:var(--red-dim);color:var(--red);font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;}
+    .tb-right{display:flex;align-items:center;gap:12px;}
+    .tb-email{font-size:13px;color:var(--text2);}
+    .btn-logout{padding:8px 16px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:'Tajawal',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;}
+    .btn-logout:hover{border-color:var(--red);color:var(--red);}
+
+    .content{padding:24px;max-width:1000px;margin:0 auto;}
+
+    /* ── STATS ── */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;}
+    .st-icon{font-size:24px;margin-bottom:8px;}
+    .st-val{font-size:28px;font-weight:900;}
+    .st-label{font-size:12px;color:var(--text2);margin-top:3px;}
+
+    /* ── TOOLBAR ── */
+    .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+    .toolbar-right{display:flex;gap:10px;flex-wrap:wrap;}
+    .search-inp{background:var(--card2);border:1.5px solid var(--border);border-radius:11px;padding:10px 14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;outline:none;direction:rtl;width:220px;transition:border-color 0.2s;}
+    .search-inp:focus{border-color:var(--blue);}
+    .search-inp::placeholder{color:var(--text3);}
+    .filter-select{background:var(--card2);border:1.5px solid var(--border);border-radius:11px;padding:10px 14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;outline:none;cursor:pointer;}
+    .btn-new{padding:10px 20px;border-radius:11px;border:none;background:var(--purple);color:#fff;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.2s;box-shadow:0 4px 12px rgba(139,92,246,0.3);}
+    .btn-new:hover{background:#7C3AED;}
+
+    /* ── TABLE ── */
+    .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+    .table-header{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;background:var(--card2);border-bottom:1px solid var(--border);font-size:12px;font-weight:800;color:var(--text2);letter-spacing:0.5px;}
+    .table-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;border-bottom:1px solid var(--border);align-items:center;transition:background 0.15s;}
+    .table-row:last-child{border-bottom:none;}
+    .table-row:hover{background:rgba(255,255,255,0.02);}
+    .code-text{font-size:13px;font-weight:700;letter-spacing:1px;font-family:monospace;}
+    .plan-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    .plan-monthly{background:var(--blue-dim);color:var(--blue);}
+    .plan-weekly{background:rgba(245,158,11,0.12);color:var(--orange);}
+    .plan-custom{background:var(--purple-dim);color:var(--purple);}
+    .status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    .st-active{background:var(--green-dim);color:var(--green);}
+    .st-expired{background:var(--red-dim);color:var(--red);}
+    .st-disabled{background:rgba(139,139,139,0.12);color:var(--text3);}
+    .st-unused{background:rgba(14,165,233,0.1);color:var(--blue);}
+    .exp-date{font-size:12px;color:var(--text2);}
+    .exp-date.expired{color:var(--red);}
+    .row-actions{display:flex;gap:6px;}
+    .act-btn{width:30px;height:30px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.2s;}
+    .act-extend{background:rgba(14,165,233,0.1);color:var(--blue);}
+    .act-extend:hover{background:var(--blue-dim);}
+    .act-toggle{background:rgba(16,185,129,0.1);color:var(--green);}
+    .act-toggle:hover{background:var(--green-dim);}
+    .act-toggle.off{background:rgba(245,158,11,0.1);color:var(--orange);}
+    .act-delete{background:var(--red-dim);color:var(--red);}
+    .act-delete:hover{background:rgba(239,68,68,0.2);}
+    .act-copy{background:var(--purple-dim);color:var(--purple);}
+    .act-copy:hover{background:rgba(139,92,246,0.2);}
+    .empty-table{text-align:center;padding:50px 20px;color:var(--text2);}
+    .empty-table .ei{font-size:48px;margin-bottom:12px;}
+
+    /* ── MODAL ── */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);}
+    .overlay.open{display:flex;}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:28px;width:100%;max-width:480px;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+    .modal-title{font-size:18px;font-weight:800;margin-bottom:20px;}
+    .mg{margin-bottom:16px;}
+    .ml{display:block;font-size:12px;color:var(--text2);margin-bottom:7px;font-weight:700;}
+    .mi{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:11px;padding:12px 14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;outline:none;direction:rtl;transition:border-color 0.2s;}
+    .mi:focus{border-color:var(--purple);}
+    select.mi{cursor:pointer;}
+    .plan-opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+    .plan-opt{padding:12px;border-radius:11px;border:2px solid var(--border);background:var(--card2);cursor:pointer;text-align:center;transition:all 0.2s;}
+    .plan-opt.sel{border-color:var(--purple);background:var(--purple-dim);}
+    .plan-opt .po-icon{font-size:20px;margin-bottom:4px;}
+    .plan-opt .po-name{font-size:12px;font-weight:700;}
+    .plan-opt .po-days{font-size:11px;color:var(--text2);}
+    .unit-btn{flex:1;padding:9px 8px;border-radius:10px;border:1.5px solid var(--border);background:var(--card2);color:var(--text2);font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center;}
+    .unit-btn.active{border-color:var(--purple);background:var(--purple-dim);color:var(--purple);}
+    .qty-row{display:flex;align-items:center;gap:10px;}
+    .qty-row input{flex:1;background:var(--card2);border:1.5px solid var(--border);border-radius:11px;padding:12px 14px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:20px;font-weight:800;outline:none;text-align:center;}
+    .qty-row input:focus{border-color:var(--purple);}
+    .qty-nb{width:44px;height:44px;border-radius:11px;border:1.5px solid var(--border);background:var(--card2);color:var(--purple);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+    .qty-nb:hover{background:var(--purple-dim);}
+    .generated-preview{background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-top:12px;display:none;}
+    .gp-label{font-size:11px;color:var(--text2);margin-bottom:6px;}
+    .gp-codes{display:flex;flex-direction:column;gap:6px;max-height:120px;overflow-y:auto;}
+    .gp-code{font-size:13px;font-weight:700;letter-spacing:1px;font-family:monospace;color:var(--purple);}
+    .modal-actions{display:flex;gap:10px;margin-top:20px;}
+    .btn-cancel{flex:0;padding:13px 20px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+    .btn-confirm{flex:1;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),#6D28D9);color:#fff;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(139,92,246,0.3);}
+    .btn-confirm:disabled{opacity:0.6;cursor:not-allowed;}
+    .modal-msg{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:14px;display:none;}
+    .modal-ok{background:var(--green-dim);color:var(--green);}
+    .modal-err2{background:var(--red-dim);color:var(--red);}
+
+    /* Extend modal */
+    .extend-opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+    .ext-opt{padding:10px 8px;border-radius:10px;border:2px solid var(--border);background:var(--card2);cursor:pointer;text-align:center;font-size:13px;font-weight:700;transition:all 0.2s;}
+    .ext-opt.sel{border-color:var(--blue);background:var(--blue-dim);color:var(--blue);}
+
+    /* Toast */
+    .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:12px 22px;font-size:14px;font-weight:700;z-index:400;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
+    .toast.show{opacity:1;}
+    .toast.green{border-color:var(--green);color:var(--green);}
+    .toast.red{border-color:var(--red);color:var(--red);}
+    .toast.blue{border-color:var(--blue);color:var(--blue);}
+
+    @keyframes spin{to{transform:rotate(360deg);}}
+    @keyframes popIn{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
+
+    /* Mobile responsive */
+    @media(max-width:700px){
+      .stats-grid{grid-template-columns:1fr 1fr;}
+      .table-header,.table-row{grid-template-columns:2fr 1fr 1fr 1fr;}
+      .table-header .col-used,.table-row .col-used,
+      .table-header .col-date,.table-row .col-date{display:none;}
+      .content{padding:14px;}
+      .search-inp{width:100%;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="spinner"></div>
+    <p>چاوەڕوان بە...</p>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ═══ LOGIN ═══ -->
+  <div class="login-wrap" id="login-wrap" style="display:none">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="icon">🔑</div>
+        <h1>RIKFIT</h1>
+        <p>پانێڵی ئەدمین</p>
+      </div>
+      <div class="login-err" id="login-err"></div>
+      <div class="form-group">
+        <label class="form-label">ئیمەیلی ئەدمین</label>
+        <input type="email" class="form-input" id="a-email" placeholder="admin@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">وشەی نهێنی</label>
+        <input type="password" class="form-input" id="a-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn-login" id="btn-login" onclick="doLogin()">چوونەژوورەوە ←</button>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main" id="main-wrap">
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-logo">RIKFIT</div>
+        <div class="tb-badge">ADMIN</div>
+      </div>
+      <div class="tb-right">
+        <span class="tb-email" id="admin-email"></span>
+        <button class="btn-logout" onclick="doLogout()">دەرچوون</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="st-icon">🔑</div>
+          <div class="st-val" id="st-total">0</div>
+          <div class="st-label">کۆی کۆدەکان</div>
+        </div>
+        <div class="stat-card">
+          <div class="st-icon">✅</div>
+          <div class="st-val" id="st-active" style="color:var(--green)">0</div>
+          <div class="st-label">چالاک</div>
+        </div>
+        <div class="stat-card">
+          <div class="st-icon">⏰</div>
+          <div class="st-val" id="st-expired" style="color:var(--red)">0</div>
+          <div class="st-label">بەسەرچووە</div>
+        </div>
+        <div class="stat-card">
+          <div class="st-icon">💤</div>
+          <div class="st-val" id="st-unused" style="color:var(--blue)">0</div>
+          <div class="st-label">بەکارنەهاتووە</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-right">
+          <input type="text" class="search-inp" id="search-inp" placeholder="🔍 گەڕان لە کۆدەکان..." oninput="renderTable()">
+          <select class="filter-select" id="filter-sel" onchange="renderTable()">
+            <option value="all">هەموو</option>
+            <option value="unused">بەکارنەهاتووە</option>
+            <option value="active">چالاک و بەکارهاتووە</option>
+            <option value="expired">بەسەرچووە</option>
+            <option value="disabled">ڕاگیراوە</option>
+          </select>
+        </div>
+        <button class="btn-new" onclick="openCreateModal()">+ دروستکردنی کۆدی نوێ</button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <div class="table-header">
+          <div>کۆد</div>
+          <div>پلان</div>
+          <div>دۆخ</div>
+          <div class="col-used">بەکارهێنەر</div>
+          <div class="col-date">بەسەرچوون</div>
+          <div>کردار</div>
+        </div>
+        <div id="table-body">
+          <div class="empty-table"><div class="ei">🔑</div><p>هێشتا کۆدێک نەدروستکراوە</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ CREATE MODAL ═══ -->
+  <div class="overlay" id="create-modal">
+    <div class="modal">
+      <div class="modal-title">➕ دروستکردنی کۆدی نوێ</div>
+      <div class="modal-msg modal-ok"  id="create-ok"></div>
+      <div class="modal-msg modal-err2" id="create-err"></div>
+
+      <div class="mg">
+        <label class="ml">پلان هەڵبژێرە</label>
+        <div class="plan-opts">
+          <div class="plan-opt sel" id="po-monthly" onclick="selPlanOpt('monthly')">
+            <div class="po-icon">🌟</div>
+            <div class="po-name">مانگانە</div>
+            <div class="po-days">٣٠ ڕۆژ</div>
+          </div>
+          <div class="plan-opt" id="po-weekly" onclick="selPlanOpt('weekly')">
+            <div class="po-icon">⚡</div>
+            <div class="po-name">هەفتانە</div>
+            <div class="po-days">٧ ڕۆژ</div>
+          </div>
+          <div class="plan-opt" id="po-custom" onclick="selPlanOpt('custom')">
+            <div class="po-icon">⚙️</div>
+            <div class="po-name">تایبەت</div>
+            <div class="po-days">دەستی</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom duration -->
+      <div class="mg" id="custom-days-wrap" style="display:none">
+        <label class="ml">یەکەی کات هەڵبژێرە</label>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <button class="unit-btn active" id="unit-hours" onclick="selUnit('hours')">⏰ سەعات</button>
+          <button class="unit-btn" id="unit-days"  onclick="selUnit('days')">📅 ڕۆژ</button>
+          <button class="unit-btn" id="unit-months" onclick="selUnit('months')">🗓️ مانگ</button>
+        </div>
+        <div class="qty-row">
+          <button class="qty-nb" onclick="adjDays(-1)">−</button>
+          <input type="number" id="custom-days" value="24" min="1" max="9999">
+          <span id="unit-label" style="padding:0 12px;color:var(--text2);font-size:13px;font-weight:700;white-space:nowrap">سەعات</span>
+          <button class="qty-nb" onclick="adjDays(1)">+</button>
+        </div>
+      </div>
+
+      <!-- How many codes -->
+      <div class="mg">
+        <label class="ml">چەند کۆد دروست بکەم؟</label>
+        <div class="qty-row">
+          <button class="qty-nb" onclick="adjCount(-1)">−</button>
+          <input type="number" id="code-count" value="1" min="1" max="50">
+          <button class="qty-nb" onclick="adjCount(1)">+</button>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="generated-preview" id="gen-preview">
+        <div class="gp-label">کۆدە دروستکراوەکان:</div>
+        <div class="gp-codes" id="gen-codes"></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('create-modal')">هەڵوەشاندنەوە</button>
+        <button class="btn-confirm" id="btn-create" onclick="createCodes()">🔑 دروستکردن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EXTEND MODAL ═══ -->
+  <div class="overlay" id="extend-modal">
+    <div class="modal">
+      <div class="modal-title">📅 درێژکردنەوەی کۆد</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:16px">کۆد: <span id="ext-code-txt" style="color:var(--purple);font-weight:800;letter-spacing:1px"></span></div>
+      <div class="mg">
+        <label class="ml">چەند ڕۆژ زیاد بکرێت؟</label>
+        <div class="extend-opts" id="ext-opts">
+          <div class="ext-opt sel" data-d="7"  onclick="selExt(7)">+٧ ڕۆژ</div>
+          <div class="ext-opt"     data-d="14" onclick="selExt(14)">+١٤ ڕۆژ</div>
+          <div class="ext-opt"     data-d="30" onclick="selExt(30)">+٣٠ ڕۆژ</div>
+          <div class="ext-opt"     data-d="60" onclick="selExt(60)">+٦٠ ڕۆژ</div>
+          <div class="ext-opt"     data-d="90" onclick="selExt(90)">+٩٠ ڕۆژ</div>
+          <div class="ext-opt"     data-d="custom" onclick="selExt('custom')">تایبەت</div>
+        </div>
+        <div id="ext-custom-wrap" style="display:none;margin-top:10px">
+          <div class="qty-row">
+            <button class="qty-nb" onclick="adjExtDays(-1)">−</button>
+            <input type="number" id="ext-custom-days" value="30" min="1" max="365">
+            <button class="qty-nb" onclick="adjExtDays(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('extend-modal')">هەڵوەشاندنەوە</button>
+        <button class="btn-confirm" onclick="doExtend()">📅 درێژکردنەوە</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp }                    from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword,
+             onAuthStateChanged, signOut }      from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+    import { getFirestore, collection, doc,
+             setDoc, getDocs, updateDoc,
+             deleteDoc, getDoc, query,
+             orderBy }                          from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+    // ═══════════════════════════════════════════════════
+    // ⚙️  FIREBASE CONFIG
+    // ═══════════════════════════════════════════════════
+    const app = initializeApp({
+      apiKey:            "AIzaSyBhYiFcQeB2r6CWDiFvqV0LUPNVoow1sjM",
+      authDomain:        "appmass-f26bd.firebaseapp.com",
+      projectId:         "appmass-f26bd",
+      storageBucket:     "appmass-f26bd.firebasestorage.app",
+      messagingSenderId: "735578268323",
+      appId:             "1:735578268323:web:4f5e27ce1307db429bd516"
+    });
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // ═══════════════════════════════════════════════════
+    // 🔐 ADMIN EMAILS — ئیمەیلی ئەدمینەکان لێرە زیاد بکە
+    // ═══════════════════════════════════════════════════
+    const ADMIN_EMAILS = [
+      'karwan11nawzad22@gmail.com',
+    ];
+
+    // ═══════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════
+    let licenses = [];
+    let selPlan  = 'monthly';
+    let extCode  = null;
+    let extDays  = 7;
+
+    // ═══════════════════════════════════════════════════
+    // AUTH
+    // ═══════════════════════════════════════════════════
+    onAuthStateChanged(auth, async user => {
+      document.getElementById('loading-screen').style.display = 'none';
+      if (!user) { showLogin(); return; }
+      if (!ADMIN_EMAILS.includes(user.email)) {
+        await signOut(auth);
+        showLogin();
+        showLoginErr('ئەم ئەکاونتە مافی ئەدمینی نییە');
+        return;
+      }
+      showMain(user);
+      await loadLicenses();
+    });
+
+    function showLogin() {
+      document.getElementById('login-wrap').style.display = 'flex';
+      document.getElementById('main-wrap').style.display = 'none';
+    }
+    function showMain(user) {
+      document.getElementById('login-wrap').style.display = 'none';
+      document.getElementById('main-wrap').style.display = 'block';
+      document.getElementById('admin-email').textContent = user.email;
+    }
+    function showLoginErr(msg) {
+      const el = document.getElementById('login-err');
+      el.textContent = msg; el.style.display = 'block';
+    }
+
+    window.doLogin = async () => {
+      const email = document.getElementById('a-email').value.trim();
+      const pass  = document.getElementById('a-pass').value;
+      const btn   = document.getElementById('btn-login');
+      if (!email || !pass) { showLoginErr('تکایە هەموو خانەکان پڕ بکەوە'); return; }
+      btn.disabled = true; btn.textContent = '⏳...';
+      document.getElementById('login-err').style.display = 'none';
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (e) {
+        const msgs = {
+          'auth/invalid-credential': 'ئیمەیل یان وشەی نهێنی هەڵەیە',
+          'auth/too-many-requests':  'زۆر جار هەوڵت دا — کەمێک چاوەڕوان بە',
+          'auth/network-request-failed': 'کێشەی ئینتەرنێت',
+        };
+        showLoginErr(msgs[e.code] || 'هەڵەیەک ڕوویدا');
+        btn.disabled = false; btn.textContent = 'چوونەژوورەوە ←';
+      }
+    };
+
+    window.doLogout = async () => {
+      await signOut(auth); showLogin();
+    };
+
+    // ═══════════════════════════════════════════════════
+    // LOAD LICENSES
+    // ═══════════════════════════════════════════════════
+    async function loadLicenses() {
+      try {
+        const snap = await getDocs(query(collection(db, 'licenses'), orderBy('createdAt', 'desc')));
+        licenses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      } catch (e) {
+        // If index not ready, load without order
+        try {
+          const snap = await getDocs(collection(db, 'licenses'));
+          licenses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          licenses.sort((a,b) => (b.createdAt||'').localeCompare(a.createdAt||''));
+        } catch (e2) { licenses = []; }
+      }
+      updateStats();
+      renderTable();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // STATS
+    // ═══════════════════════════════════════════════════
+    function updateStats() {
+      const now = Date.now();
+      let active=0, expired=0, unused=0;
+      licenses.forEach(l => {
+        if (!l.usedBy) { unused++; return; }
+        if (!l.active) return;
+        if (l.expiresAt && now > parseInt(l.expiresAt)) expired++;
+        else active++;
+      });
+      document.getElementById('st-total').textContent   = licenses.length;
+      document.getElementById('st-active').textContent  = active;
+      document.getElementById('st-expired').textContent = expired;
+      document.getElementById('st-unused').textContent  = unused;
+    }
+
+    // ═══════════════════════════════════════════════════
+    // RENDER TABLE
+    // ═══════════════════════════════════════════════════
+    window.renderTable = () => {
+      const q   = document.getElementById('search-inp').value.toLowerCase();
+      const fil = document.getElementById('filter-sel').value;
+      const now = Date.now();
+
+      let filtered = licenses.filter(l => {
+        if (q && !l.id.toLowerCase().includes(q)) return false;
+        const isExpired = l.expiresAt && now > parseInt(l.expiresAt);
+        if (fil === 'unused'   && l.usedBy)              return false;
+        if (fil === 'unused'   && !(!l.usedBy))          return false;
+        if (fil === 'active'   && (!l.usedBy || !l.active || isExpired)) return false;
+        if (fil === 'expired'  && (!l.usedBy || !isExpired))             return false;
+        if (fil === 'disabled' && l.active)              return false;
+        return true;
+      });
+
+      // Fix unused filter
+      if (fil === 'unused') filtered = licenses.filter(l => !l.usedBy);
+
+      const body = document.getElementById('table-body');
+      if (!filtered.length) {
+        body.innerHTML = '<div class="empty-table"><div class="ei">🔍</div><p>هیچ کۆدێک نەدۆزرایەوە</p></div>';
+        return;
+      }
+
+      body.innerHTML = filtered.map(l => {
+        const isExpired = l.expiresAt && now > parseInt(l.expiresAt);
+        const status = !l.active ? 'disabled' : !l.usedBy ? 'unused' : isExpired ? 'expired' : 'active';
+        const statusLabels = { active:'✅ چالاک', expired:'⏰ بەسەرچووە', disabled:'🚫 ڕاگیراوە', unused:'🔵 بەکارنەهاتووە' };
+        const statusClasses = { active:'st-active', expired:'st-expired', disabled:'st-disabled', unused:'st-unused' };
+        const planClass = { monthly:'plan-monthly', weekly:'plan-weekly', custom:'plan-custom' }[l.plan] || 'plan-custom';
+        const planLabel = { monthly:'مانگانە', weekly:'هەفتانە', custom:'تایبەت' }[l.plan] || l.plan;
+        const expStr = l.expiresAt ? new Date(parseInt(l.expiresAt)).toLocaleDateString('en-GB') : '—';
+        const isToggleOff = !l.active;
+        return `
+          <div class="table-row">
+            <div><span class="code-text">${l.id}</span></div>
+            <div><span class="plan-badge ${planClass}">${planLabel}</span></div>
+            <div><span class="status-badge ${statusClasses[status]}">${statusLabels[status]}</span></div>
+            <div class="col-used" style="font-size:12px;color:var(--text2)">${l.usedBy||'—'}</div>
+            <div class="col-date"><span class="exp-date${isExpired?' expired':''}">${expStr}</span></div>
+            <div class="row-actions">
+              <button class="act-btn act-copy"   onclick="copyCode('${l.id}')"    title="کۆپی">📋</button>
+              <button class="act-btn act-extend" onclick="openExtend('${l.id}')"  title="درێژکردنەوە">📅</button>
+              <button class="act-btn act-toggle${isToggleOff?' off':''}" onclick="toggleLic('${l.id}')" title="${isToggleOff?'چالاک بکە':'ڕاگرتن'}">${isToggleOff?'▶️':'⏸️'}</button>
+              <button class="act-btn act-delete" onclick="deleteLic('${l.id}')"  title="سڕینەوە">🗑️</button>
+            </div>
+          </div>`;
+      }).join('');
+    };
+
+    // ═══════════════════════════════════════════════════
+    // CREATE CODES
+    // ═══════════════════════════════════════════════════
+    function genCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const rand4 = () => Array.from({length:4}, ()=>chars[Math.floor(Math.random()*chars.length)]).join('');
+      return `RIKFIT-${rand4()}-${rand4()}-${rand4()}`;
+    }
+
+    let selUnit = 'hours';
+
+    window.selPlanOpt = p => {
+      selPlan = p;
+      ['monthly','weekly','custom'].forEach(k => document.getElementById('po-'+k).classList.toggle('sel', k===p));
+      document.getElementById('custom-days-wrap').style.display = p==='custom' ? 'block' : 'none';
+    };
+
+    window.selUnit = u => {
+      selUnit = u;
+      ['hours','days','months'].forEach(k => document.getElementById('unit-'+k).classList.toggle('active', k===u));
+      const labels = {hours:'سەعات', days:'ڕۆژ', months:'مانگ'};
+      const defaults = {hours:24, days:30, months:1};
+      document.getElementById('unit-label').textContent = labels[u];
+      document.getElementById('custom-days').value = defaults[u];
+    };
+
+    function getCustomMs() {
+      const val = parseInt(document.getElementById('custom-days').value) || 1;
+      if (selUnit === 'hours')  return val * 60 * 60 * 1000;
+      if (selUnit === 'months') return val * 30 * 24 * 60 * 60 * 1000;
+      return val * 24 * 60 * 60 * 1000; // days
+    }
+
+    function getPlanLabel() {
+      const val = parseInt(document.getElementById('custom-days').value) || 1;
+      if (selPlan === 'monthly') return '٣٠ ڕۆژ';
+      if (selPlan === 'weekly')  return '٧ ڕۆژ';
+      const labels = {hours:'سەعات', days:'ڕۆژ', months:'مانگ'};
+      return val + ' ' + labels[selUnit];
+    }
+
+    window.adjDays  = d => {
+      const inp = document.getElementById('custom-days');
+      const max = selUnit==='months' ? 36 : selUnit==='hours' ? 8760 : 9999;
+      inp.value = Math.max(1, Math.min(max, parseInt(inp.value)+d));
+    };
+    window.adjCount = d => { const inp=document.getElementById('code-count');  inp.value=Math.max(1,Math.min(50, parseInt(inp.value)+d)); };
+
+    window.openCreateModal = () => {
+      document.getElementById('create-ok').style.display  = 'none';
+      document.getElementById('create-err').style.display = 'none';
+      document.getElementById('gen-preview').style.display = 'none';
+      document.getElementById('gen-codes').innerHTML = '';
+      document.getElementById('create-modal').classList.add('open');
+    };
+
+    window.createCodes = async () => {
+      const count    = parseInt(document.getElementById('code-count').value) || 1;
+      const expiryMs = selPlan==='monthly' ? 30*24*60*60*1000 : selPlan==='weekly' ? 7*24*60*60*1000 : getCustomMs();
+      const planLbl  = selPlan==='monthly' ? 'مانگانە' : selPlan==='weekly' ? 'هەفتانە' : getPlanLabel();
+      const btn    = document.getElementById('btn-create');
+      btn.disabled = true; btn.textContent = '⏳...';
+      document.getElementById('create-ok').style.display  = 'none';
+      document.getElementById('create-err').style.display = 'none';
+
+      const newCodes = [];
+
+      try {
+        for (let i = 0; i < count; i++) {
+          const code = genCode();
+          const licData = {
+            plan:       selPlan==='custom' ? planLbl : selPlan,
+            active:     true,
+            usedBy:     '',
+            expiresAt:  '',
+            durationMs: expiryMs,
+            createdAt:  new Date().toISOString(),
+          };
+          await setDoc(doc(db, 'licenses', code), licData);
+          newCodes.push(code);
+          licenses.unshift({ id: code, ...licData });
+        }
+
+        // Show generated codes
+        document.getElementById('gen-preview').style.display = 'block';
+        document.getElementById('gen-codes').innerHTML = newCodes.map(c=>`<div class="gp-code">${c}</div>`).join('');
+        document.getElementById('create-ok').textContent = `✅ ${count} کۆد دروستکرا!`;
+        document.getElementById('create-ok').style.display = 'block';
+        updateStats(); renderTable();
+        toast(`✅ ${count} کۆد دروستکرا!`, 'green');
+      } catch (e) {
+        document.getElementById('create-err').textContent = 'هەڵەیەک ڕوویدا: ' + e.message;
+        document.getElementById('create-err').style.display = 'block';
+      }
+      btn.disabled = false; btn.textContent = '🔑 دروستکردن';
+    };
+
+    // ═══════════════════════════════════════════════════
+    // EXTEND
+    // ═══════════════════════════════════════════════════
+    window.openExtend = code => {
+      extCode = code; extDays = 7;
+      document.getElementById('ext-code-txt').textContent = code;
+      document.querySelectorAll('.ext-opt').forEach(el => el.classList.toggle('sel', el.dataset.d==='7'));
+      document.getElementById('ext-custom-wrap').style.display = 'none';
+      document.getElementById('extend-modal').classList.add('open');
+    };
+
+    window.selExt = d => {
+      extDays = d;
+      document.querySelectorAll('.ext-opt').forEach(el => el.classList.toggle('sel', el.dataset.d===String(d)));
+      document.getElementById('ext-custom-wrap').style.display = d==='custom' ? 'block' : 'none';
+    };
+    window.adjExtDays = d => { const inp=document.getElementById('ext-custom-days'); inp.value=Math.max(1,Math.min(365,parseInt(inp.value)+d)); };
+
+    window.doExtend = async () => {
+      if (!extCode) return;
+      const days = extDays==='custom' ? parseInt(document.getElementById('ext-custom-days').value)||30 : extDays;
+      const lic  = licenses.find(l => l.id===extCode);
+      if (!lic) return;
+
+      // Extend from now or from current expiry (whichever is later)
+      const base = lic.expiresAt ? Math.max(Date.now(), parseInt(lic.expiresAt)) : Date.now();
+      const newExpiry = base + days * 24 * 60 * 60 * 1000;
+
+      try {
+        await updateDoc(doc(db,'licenses',extCode), { expiresAt: String(newExpiry), active: true });
+        lic.expiresAt = String(newExpiry); lic.active = true;
+        updateStats(); renderTable();
+        closeModal('extend-modal');
+        toast(`✅ ${days} ڕۆژ زیاد کرا!`, 'green');
+      } catch (e) { toast('هەڵەیەک ڕوویدا', 'red'); }
+    };
+
+    // ═══════════════════════════════════════════════════
+    // TOGGLE / DELETE / COPY
+    // ═══════════════════════════════════════════════════
+    window.toggleLic = async code => {
+      const lic = licenses.find(l => l.id===code);
+      if (!lic) return;
+      const newActive = !lic.active;
+      try {
+        await updateDoc(doc(db,'licenses',code), { active: newActive });
+        lic.active = newActive;
+        updateStats(); renderTable();
+        toast(newActive ? '✅ چالاک کرا' : '⏸️ ڕاگیرا', newActive?'green':'');
+      } catch (e) { toast('هەڵەیەک ڕوویدا','red'); }
+    };
+
+    window.deleteLic = async code => {
+      if (!confirm(`دڵنیایت لە سڕینەوەی:\n${code}`)) return;
+      try {
+        await deleteDoc(doc(db,'licenses',code));
+        licenses = licenses.filter(l => l.id!==code);
+        updateStats(); renderTable();
+        toast('🗑️ سڕایەوە', 'red');
+      } catch (e) { toast('هەڵەیەک ڕوویدا','red'); }
+    };
+
+    window.copyCode = code => {
+      navigator.clipboard.writeText(code).then(() => toast('📋 کۆپی کرا: '+code, 'blue'));
+    };
+
+    // ═══════════════════════════════════════════════════
+    // HELPERS
+    // ═══════════════════════════════════════════════════
+    window.closeModal = id => document.getElementById(id).classList.remove('open');
+    document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) o.classList.remove('open'); }));
+
+    function toast(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show' + (type?' '+type:'');
+      setTimeout(() => t.className='toast', 3000);
+    }
+  </script>
+</body>
+</html>
