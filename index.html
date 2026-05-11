@@ -299,20 +299,25 @@
       <!-- Manual add -->
       <div class="toolbar">
         <div class="toolbar-left">
-          <input type="text" class="search-inp" id="food-search" placeholder="🔍 گەڕانی خواردن..." oninput="renderFoodTable()">
-          <select class="filter-sel" id="food-cat" onchange="renderFoodTable()">
+          <input type="text" class="search-inp" id="food-search" placeholder="گەڕان بۆ خواردن..." oninput="renderFoodTable()">
+          <select class="filter-sel" id="food-cat-filter" onchange="renderFoodTable()">
             <option value="all">هەموو جۆرەکان</option>
-            <option value="protein">🥩 پڕۆتین</option>
-            <option value="carb">🌾 کاربۆ</option>
-            <option value="fat">🥑 چەوی</option>
-            <option value="fruit">🍎 میوە</option>
-            <option value="veggie">🥦 سەوزە</option>
-            <option value="dairy">🥛 شیر و ماست</option>
-            <option value="drink">🧃 خواردنەوە</option>
-            <option value="other">دیکە</option>
+            <option value="protein">پرۆتین</option>
+            <option value="carb">کاربۆهیدرات</option>
+            <option value="fat">چەوری</option>
+            <option value="fruit">میوە</option>
+            <option value="veggie">سەوزە</option>
+            <option value="dairy">شیرەمەنی</option>
+            <option value="drink">خواردنەوە</option>
+            <option value="other">هیتر</option>
           </select>
         </div>
-        <button class="btn-new btn-green" onclick="openFoodModal()">+ زیادکردنی دەستی</button>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-new btn-blue" onclick="exportData()" title="داونلۆدکردنی باک ئەپ">📥 Export</button>
+          <button class="btn-new btn-orange" onclick="document.getElementById('import-file').click()" title="بارکردنەوەی باک ئەپ">📤 Import</button>
+          <input type="file" id="import-file" style="display:none" accept=".json" onchange="importData(event)">
+          <button class="btn-new btn-purple" onclick="openFoodModal()">➕ خواردنی نوێ</button>
+        </div>
       </div>
       <div class="table-wrap">
         <div class="table-header food-cols">
@@ -873,6 +878,51 @@ The user's request: ${prompt}`;
     window.closeModal=id=>document.getElementById(id).classList.remove('open');
     document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
     function toast(m,t){const el=document.getElementById('toast');el.textContent=m;el.className='toast show'+(t?' '+t:'');setTimeout(()=>el.className='toast',3000);}
+
+    // ══ BACKUP SYSTEM ══
+    window.exportData = () => {
+      if (foods.length === 0) { toast('هیچ داتایەک نییە بۆ باک ئەپ', 'red'); return; }
+      const dataStr = JSON.stringify(foods, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      const exportFileDefaultName = `rikfit_foods_backup_${new Date().toISOString().split('T')[0]}.json`;
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+      toast('باک ئەپ بە سەرکەوتوویی دابەزی', 'green');
+    };
+
+    window.importData = async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const importedFoods = JSON.parse(e.target.result);
+          if (!Array.isArray(importedFoods)) throw new Error('فۆرماتی فایلەکە دروست نییە');
+          
+          if (!confirm(`ئایا دڵنیایت دەتەوێت ${importedFoods.length} خواردن زیاد بکەیت؟`)) return;
+          
+          let count = 0;
+          for (const f of importedFoods) {
+            const { id, ...data } = f; // Remove old ID to create new one in Firebase
+            data.updatedAt = new Date().toISOString();
+            if (!data.createdAt) data.createdAt = new Date().toISOString();
+            
+            const ref = await addDoc(collection(db, 'foods'), data);
+            foods.unshift({ id: ref.id, ...data });
+            count++;
+          }
+          renderFoodTable();
+          toast(`✅ ${count} خواردن بە سەرکەوتوویی گەڕێنرایەوە`, 'green');
+        } catch (err) {
+          toast('هەڵەیەک ڕوویدا لە کاتی خوێندنەوەی فایلەکە', 'red');
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = ''; // Reset input
+    };
   </script>
 </body>
 </html>
