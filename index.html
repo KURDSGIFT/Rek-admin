@@ -793,7 +793,39 @@
       const btn=document.getElementById('btn-ai');btn.disabled=true;btn.textContent='⏳...';
       document.getElementById('ai-loading').style.display='block';
       document.getElementById('ai-results').style.display='none';
-      const systemPrompt=`You are a professional nutrition database expert. Return ONLY valid JSON for the food items: ${prompt}`;
+      const systemPrompt=`You are a professional nutrition database expert. The user will ask you to generate food items. 
+Return ONLY valid JSON, no markdown, no code blocks, no explanation. Just pure JSON.
+
+Format:
+{
+  "foods": [
+    {
+      "name_ku": "Kurdish name",
+      "name_en": "English name",
+      "emoji": "single appropriate emoji",
+      "category": "protein|carb|fat|fruit|veggie|dairy|drink|other",
+      "units": [
+        {
+          "type": "unit name in Kurdish",
+          "cal": number,
+          "protein": number,
+          "carbs": number,
+          "fat": number
+        }
+      ]
+    }
+  ]
+}
+
+CRITICAL RULES for units:
+- LIQUIDS: ["ملیلیتر (ml)", "لیتر (L)", "کوێژ (cup)"]
+- EGGS/BREAD/FRUITS: ["دانە", "گرام (g)"]
+- NUTS/CHEESE/OILS: ["گرام (g)", "چەمچەی مەزن (tbsp)"]
+- MEAT/VEGGIES: ["گرام (g)"]
+- RICE/PASTA: ["گرام (g)", "کوێژ (cup)"]
+
+Use accurate nutritional values. Provide name in Kurdish (Sorani) AND English.
+The user's request: ${prompt}`;
       try{
         const resp=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:systemPrompt}]}],generationConfig:{temperature:0.2,maxOutputTokens:6000}})});
         const data=await resp.json();
@@ -812,17 +844,31 @@
     function renderAIResults(){
       const cards=document.getElementById('food-cards');
       cards.innerHTML=aiResults.map((f,i)=>{
-        const isApproved=f._status==='approved', isSkipped=f._status==='skipped', units=(f.units||[]).map(u=>`<div class="fc-unit-row"><span>${u.type}</span><span>${u.cal}cal P:${u.protein}g</span></div>`).join('');
+        const isApproved=f._status==='approved', isSkipped=f._status==='skipped', units=(f.units||[]).map(u=>`<div class="fc-unit-row"><span>${u.type}</span><span>${u.cal}cal P:${u.protein}g C:${u.carbs}g F:${u.fat}g</span></div>`).join('');
         return`<div class="food-card${isApproved?' approved':isSkipped?' skipped':''}">
           <div class="fc-top"><span class="fc-emoji">${f.emoji||'🍽️'}</span><div><div class="fc-name-ku">${f.name_ku||'—'}</div><span class="fc-cat">${f.category||'other'}</span></div></div>
           <div class="fc-units">${units}</div>
           <div class="fc-actions">
             <button class="fc-btn fc-approve${isApproved?' done':''}" onclick="approveFood(${i})">${isApproved?'✅ پەسەندکرا':'✓ پەسەند'}</button>
+            <button class="fc-btn fc-edit" onclick="editAIFood(${i})">✏️</button>
             <button class="fc-btn fc-skip" onclick="skipFood(${i})">${isSkipped?'↩️':'✗ بەردە'}</button>
           </div>
         </div>`;
       }).join('');
     }
+
+    window.editAIFood=i=>{
+      editFoodId=null; const f=aiResults[i];
+      document.getElementById('food-modal-title').textContent='✏️ دەستکاریکردنی خواردنی AI';
+      document.getElementById('f-emoji').value=f.emoji||'';document.getElementById('emoji-prev').textContent=f.emoji||'🍽️';
+      document.getElementById('f-name-ku').value=f.name_ku||'';document.getElementById('f-name-en').value=f.name_en||'';
+      document.getElementById('f-cat').value=f.category||'protein';
+      document.getElementById('f-ok').style.display='none';document.getElementById('f-err').style.display='none';
+      document.getElementById('unit-rows').innerHTML='';unitRowCount=0;
+      (f.units||[]).forEach(u=>addUnitRow(u));if(!(f.units?.length))addUnitRow();
+      window._editingAIIdx=i;
+      document.getElementById('modal-food').classList.add('open');
+    };
     window.approveFood=i=>{aiResults[i]._status=aiResults[i]._status==='approved'?'pending':'approved';renderAIResults();};
     window.skipFood=i=>{aiResults[i]._status=aiResults[i]._status==='skipped'?'pending':'skipped';renderAIResults();};
     window.approveAll=()=>{aiResults.forEach(f=>{if(f._status!=='skipped')f._status='approved';});renderAIResults();};
