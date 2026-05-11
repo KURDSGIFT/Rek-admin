@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # ئەمە زۆر گرنگە بۆ ئەوەی بتوانێت فایلەکە پاشەکەوت بکات
+  contents: write
 
 jobs:
   backup:
@@ -16,13 +16,13 @@ jobs:
 
       - name: Fetch Data from Firebase
         run: |
-          # بەکارهێنانی کوتەیشن بۆ بەستەرەکە بۆ ئەوەی کێشەی نەبێت
-          curl -v "https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/(default )/documents/foods" -o foods_backup.json
+          # بەکارهێنانی کۆدی تایبەت بۆ کەوانەکان بۆ ئەوەی هیچ هەڵەیەک ڕانەگرێت
+          curl -L "https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/%28default%29/documents/foods" -o foods_backup.json
 
       - name: Commit and Push Backup
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add foods_backup.json
-          git commit -m "Daily Backup: $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git commit -m "Daily Backup: $(date +'%Y-%m-%d' )" || echo "No changes to commit"
           git push
