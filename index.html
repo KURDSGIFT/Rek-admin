@@ -633,7 +633,7 @@
 
     window.renderFoodTable=()=>{
       const q=document.getElementById('food-search').value.toLowerCase();
-      const cat=document.getElementById('food-cat').value;
+      const cat=document.getElementById('food-cat-filter').value;
       let list=foods.filter(f=>{
         if(cat!=='all'&&f.category!==cat)return false;
         if(q&&!(f.name_ku||'').toLowerCase().includes(q)&&!(f.name_en||'').toLowerCase().includes(q))return false;
