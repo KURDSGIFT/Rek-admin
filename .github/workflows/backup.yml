@@ -16,13 +16,12 @@ jobs:
 
       - name: Fetch Data from Firebase
         run: |
-          # بەکارهێنانی کۆدی تایبەت بۆ کەوانەکان بۆ ئەوەی هیچ هەڵەیەک ڕانەگرێت
-          curl -L "https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/%28default%29/documents/foods" -o foods_backup.json
+          python3 -c "import urllib.request; urllib.request.urlretrieve('https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/(default )/documents/foods', 'foods_backup.json')"
 
       - name: Commit and Push Backup
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add foods_backup.json
-          git commit -m "Daily Backup: $(date +'%Y-%m-%d' )" || echo "No changes to commit"
+          git commit -m "Daily Backup: $(date +'%Y-%m-%d')" || echo "No changes to commit"
           git push
