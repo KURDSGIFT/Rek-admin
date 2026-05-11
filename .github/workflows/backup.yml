@@ -1,0 +1,25 @@
+name: Daily Firebase Backup
+on:
+  schedule:
+    - cron: '0 0 * * *' # هەموو شەوێک سەعات ١٢ بە کاتی جیهانی کار دەکات
+  workflow_dispatch: # بۆ ئەوەی بتوانی بە دەستیش هەر کات ویستت کاری پێ بکەیت
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Fetch Data from Firebase
+        run: |
+          # وەرگرتنی داتاکان لە فایەربەیس و پاشەکەوتکردنی وەک فایلی JSON
+          curl -L "https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/(default )/documents/foods" -o foods_backup.json
+
+      - name: Commit and Push Backup
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add foods_backup.json
+          git commit -m "Daily Backup: $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push
