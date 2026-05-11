@@ -264,7 +264,7 @@
       <div class="ai-section">
         <div class="ai-header">
           <div class="ai-icon">🤖</div>
-          <div><div class="ai-title">یارمەتیدەری Gemini AI</div><div class="ai-sub">داواکاریت بنووسە، لیست ئامادەدەبێت</div></div>
+          <div><div class="ai-title">یارمەتیدەری Groq AI</div><div class="ai-sub">داواکاریت بنووسە، لیست ئامادەدەبێت</div></div>
         </div>
         <div class="ai-input-row">
           <textarea class="ai-textarea" id="ai-prompt" placeholder="نموونە: خواردنی بەیانی کوردی ١٥ دانە زیاد بکە&#10;Add 10 protein-rich foods&#10;میوە و سەوزەکانی گشتی" rows="2"></textarea>
@@ -281,7 +281,7 @@
         <!-- AI Loading -->
         <div class="ai-loading" id="ai-loading" style="display:none">
           <div class="ai-spin"></div>
-          <p>Gemini AI خواردنەکان دەدۆزێتەوە...</p>
+          <p>Groq AI خواردنەکان دەدۆزێتەوە...</p>
         </div>
         <!-- AI Results -->
         <div id="ai-results" style="display:none;margin-top:16px">
@@ -453,8 +453,8 @@
     const auth=getAuth(app), db=getFirestore(app);
 
     // ══ GEMINI ══
-    const GEMINI_KEY='AIzaSyDfvJvSNlimdstF2xWQxFUOUIQVjjd-AKc';
-    const GEMINI_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+    const GROQ_KEY='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';
+    const GROQ_URL='https://api.groq.com/openai/v1/chat/completions';
 
     // ══ ADMIN ══
     const ADMIN_EMAILS=['karwan11nawzad22@gmail.com'];
@@ -763,18 +763,41 @@ Provide name in Kurdish (Sorani) AND English.
 The user's request: ${prompt}`;
 
       try{
-        const resp=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:systemPrompt}]}],generationConfig:{temperature:0.2,maxOutputTokens:6000}})});
+        const resp=await fetch(GROQ_URL,{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${GROQ_KEY}`
+          },
+          body:JSON.stringify({
+            model: "llama-3.3-70b-versatile",
+            messages: [{role: "user", content: systemPrompt}],
+            temperature: 0.2,
+            response_format: { type: "json_object" }
+          })
+        });
+        
+        if (!resp.ok) {
+          const errData = await resp.json();
+          throw new Error(errData.error?.message || `HTTP error! status: ${resp.status}`);
+        }
+
         const data=await resp.json();
-        let text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
-        // Clean JSON
-        text=text.replace(/```json/g,'').replace(/```/g,'').trim();
-        const parsed=JSON.parse(text);
+        let text=data.choices?.[0]?.message?.content || '';
+        
+        let parsed;
+        try {
+          parsed = JSON.parse(text);
+        } catch (jsonErr) {
+          console.error('JSON Parse Error:', text);
+          throw new Error('وەڵامەکەی Groq بە شێوەیەکی دروست نەبوو (JSON Error)');
+        }
         aiResults=(parsed.foods||[]).map((f,i)=>({...f,_idx:i,_status:'pending'}));
         renderAIResults();
         document.getElementById('ai-results').style.display='block';
         document.getElementById('ai-results-title').textContent=`${aiResults.length} خواردن دۆزرایەوە — پەسەند بکە یان دەستکاری بکە`;
       }catch(e){
-        toast('هەڵەیەک لە Gemini: '+e.message,'red');
+        toast('هەڵەیەک لە Groq: '+e.message,'red');
         console.error(e);
       }
       document.getElementById('ai-loading').style.display='none';
