@@ -12,12 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Fetch Data from Firebase
         run: |
-          # بەکارهێنانی ڕێگەیەکی زۆر سادە کە هیچ کێشەیەکی لەگەڵ نیشانەکان نییە
-          python3 -c "import urllib.request; url='https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/%28default%29/documents/foods'; urllib.request.urlretrieve(url, 'foods_backup.json' )"
+          python3 -c "import urllib.request; url='https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/(default )/documents/foods'; urllib.request.urlretrieve(url, 'foods_backup.json')"
 
       - name: Commit and Push Backup
         run: |
