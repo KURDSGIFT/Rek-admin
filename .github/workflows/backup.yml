@@ -16,17 +16,7 @@ jobs:
 
       - name: Fetch Data from Firebase
         run: |
-          python3 - <<EOF
-          import urllib.request
-          # پێناسەکردنی زانیارییەکان بە جیا بۆ ئەوەی هیچ بۆشاییەک دروست نەبێت
-          project = "appmass-f26bd"
-          db = "(default)"
-          url = f"https://firestore.googleapis.com/v1/projects/{project}/databases/{db}/documents/foods"
-          # سڕینەوەی هەر بۆشاییەکی شاراوە
-          clean_url = url.replace(' ', '' ).strip()
-          print(f"Fetching from: {clean_url}")
-          urllib.request.urlretrieve(clean_url, 'foods_backup.json')
-          EOF
+          python3 -c "import urllib.request; urllib.request.urlretrieve('https://firestore.googleapis.com/v1/projects/appmass-f26bd/databases/(default)/documents/foods', 'foods_backup.json')"
 
       - name: Commit and Push Backup
         run: |
