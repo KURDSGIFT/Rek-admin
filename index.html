@@ -198,6 +198,25 @@
     @media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr;}.food-cards{grid-template-columns:1fr;}.lic-cols{grid-template-columns:1.5fr 0.8fr 0.8fr 1fr;}.food-cols{grid-template-columns:1.5fr 1.5fr 1fr;}.content{padding:14px;}}
     @keyframes spin{to{transform:rotate(360deg);}}
     @keyframes popIn{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
+  
+    /* MICRO NUTRIENTS */
+    .fc-micro{margin-top:8px;padding:8px;background:rgba(139,92,246,0.08);border-radius:8px;border:1px solid rgba(139,92,246,0.15);}
+    .fc-micro-label{font-size:11px;color:var(--text2);display:block;margin-bottom:4px;}
+    .fc-micro-tags{display:flex;flex-wrap:wrap;gap:4px;}
+    .micro-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+    .micro-tag.vit{background:rgba(14,165,233,0.15);color:var(--blue);}
+    .micro-tag.min{background:rgba(16,185,129,0.15);color:var(--green);}
+    .vit-indicator{font-size:11px;color:var(--purple);background:rgba(139,92,246,0.12);padding:2px 8px;border-radius:10px;margin-right:6px;}
+    /* Vitamin builder in modal */
+    .vit-builder{margin-top:12px;padding:12px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);border-radius:12px;}
+    .vit-builder-title{font-size:13px;font-weight:800;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+    .vit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+    .vit-grid-2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;}
+    .vit-field{display:flex;flex-direction:column;gap:3px;}
+    .vit-field label{font-size:10px;color:var(--text2);font-weight:600;}
+    .vit-field input{width:100%;padding:6px 8px;border-radius:8px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-family:'Tajawal',sans-serif;font-size:12px;}
+    .vit-field input:focus{outline:none;border-color:var(--purple);}
+
   </style>
 </head>
 <body>
@@ -439,6 +458,39 @@
         </div>
         <div style="font-size:10px;color:var(--text2);margin-top:6px;line-height:1.6">💡 گرام/ملیلیتر: بۆ ١٠٠ یەکە | دانە/کوێژ: بۆ ١ یەکە</div>
       </div>
+      <!-- VITAMINS & MINERALS -->
+      <div class="mg">
+        <div class="vit-builder">
+          <div class="vit-builder-title">🧬 ڤیتامینەکان (mg/100g)</div>
+          <div class="vit-grid">
+            <div class="vit-field"><label>A (Retinol)</label><input type="number" id="v-A" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>C (Ascorbic)</label><input type="number" id="v-C" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>D (Cholecalciferol)</label><input type="number" id="v-D" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>E (Tocopherol)</label><input type="number" id="v-E" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>K (Phylloquinone)</label><input type="number" id="v-K" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>B1 (Thiamine)</label><input type="number" id="v-B1" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>B2 (Riboflavin)</label><input type="number" id="v-B2" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>B3 (Niacin)</label><input type="number" id="v-B3" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>B6 (Pyridoxine)</label><input type="number" id="v-B6" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>B9 (Folate)</label><input type="number" id="v-B9" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>B12 (Cobalamin)</label><input type="number" id="v-B12" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label style="color:var(--text3)">—</label><input type="text" value="mg/100g" disabled style="color:var(--text3);text-align:center;"></div>
+          </div>
+        </div>
+        <div class="vit-builder" style="margin-top:10px;">
+          <div class="vit-builder-title">🪨 کانزاکان (mg/100g)</div>
+          <div class="vit-grid-2">
+            <div class="vit-field"><label>کالسیۆم (Ca)</label><input type="number" id="m-calcium" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>ئاسن (Fe)</label><input type="number" id="m-iron" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>ماگنێسیۆم (Mg)</label><input type="number" id="m-magnesium" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>فۆسفۆر (P)</label><input type="number" id="m-phosphorus" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>پۆتاسیۆم (K)</label><input type="number" id="m-potassium" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>سۆدیۆم (Na)</label><input type="number" id="m-sodium" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>زینک (Zn)</label><input type="number" id="m-zinc" placeholder="0" step="0.01"></div>
+            <div class="vit-field"><label>سیلینیۆم (Se)</label><input type="number" id="m-selenium" placeholder="0" step="0.01"></div>
+          </div>
+        </div>
+      </div>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal('modal-food')">هەڵوەشاندنەوە</button>
         <button class="btn-ok btn-ok-green" id="btn-save-food" onclick="saveFood()">💾 تۆمارکردن</button>
@@ -646,10 +698,14 @@
         const units=f.units||[];
         const chips=units.map(u=>`<span class="unit-chip">${u.type}</span>`).join('');
         const isOff=f.active===false;
+        const v=f.vitamins||{};
+        const m=f.minerals||{};
+        const hasMicro=Object.values(v).some(x=>x>0)||Object.values(m).some(x=>x>0);
+        const microBadge=hasMicro?`<span class="vit-indicator" title="ڤیتامین & کانزا">🧬</span>`:'';
         return`<div class="table-row food-cols">
           <div style="display:flex;align-items:center;gap:8px">
             <span class="food-emoji-big">${f.emoji||'🍽️'}</span>
-            <div><div style="font-size:14px;font-weight:700">${f.name_ku||'—'}</div><div style="font-size:11px;color:var(--text2)">${f.name_en||''}</div></div>
+            <div><div style="font-size:14px;font-weight:700">${f.name_ku||'—'}${microBadge}</div><div style="font-size:11px;color:var(--text2)">${f.name_en||''}</div></div>
           </div>
           <div><div class="unit-chips">${chips||'—'}</div></div>
           <div><span class="badge b-custom">${catN[f.category||'other']||'دیکە'}</span></div>
@@ -686,9 +742,48 @@
         return{type:document.getElementById('ut-'+id)?.value||'',cal:parseFloat(document.getElementById('uc-'+id)?.value)||0,protein:parseFloat(document.getElementById('up-'+id)?.value)||0,carbs:parseFloat(document.getElementById('ub-'+id)?.value)||0,fat:parseFloat(document.getElementById('uf-'+id)?.value)||0};
       }).filter(u=>u.type);
     }
+    function collectVitamins(){
+      return{
+        A:parseFloat(document.getElementById('v-A')?.value)||0,
+        C:parseFloat(document.getElementById('v-C')?.value)||0,
+        D:parseFloat(document.getElementById('v-D')?.value)||0,
+        E:parseFloat(document.getElementById('v-E')?.value)||0,
+        K:parseFloat(document.getElementById('v-K')?.value)||0,
+        B1:parseFloat(document.getElementById('v-B1')?.value)||0,
+        B2:parseFloat(document.getElementById('v-B2')?.value)||0,
+        B3:parseFloat(document.getElementById('v-B3')?.value)||0,
+        B6:parseFloat(document.getElementById('v-B6')?.value)||0,
+        B9:parseFloat(document.getElementById('v-B9')?.value)||0,
+        B12:parseFloat(document.getElementById('v-B12')?.value)||0
+      };
+    }
+    function collectMinerals(){
+      return{
+        calcium:parseFloat(document.getElementById('m-calcium')?.value)||0,
+        iron:parseFloat(document.getElementById('m-iron')?.value)||0,
+        magnesium:parseFloat(document.getElementById('m-magnesium')?.value)||0,
+        phosphorus:parseFloat(document.getElementById('m-phosphorus')?.value)||0,
+        potassium:parseFloat(document.getElementById('m-potassium')?.value)||0,
+        sodium:parseFloat(document.getElementById('m-sodium')?.value)||0,
+        zinc:parseFloat(document.getElementById('m-zinc')?.value)||0,
+        selenium:parseFloat(document.getElementById('m-selenium')?.value)||0
+      };
+    }
 
-    window.openFoodModal=()=>{editFoodId=null;document.getElementById('food-modal-title').textContent='🍽️ زیادکردنی خواردن';['f-emoji','f-name-ku','f-name-en'].forEach(id=>document.getElementById(id).value='');document.getElementById('emoji-prev').textContent='🍽️';document.getElementById('f-cat').value='protein';document.getElementById('f-ok').style.display='none';document.getElementById('f-err').style.display='none';document.getElementById('unit-rows').innerHTML='';unitRowCount=0;addUnitRow();document.getElementById('modal-food').classList.add('open');};
-    window.openEditFood=id=>{const f=foods.find(x=>x.id===id);if(!f)return;editFoodId=id;document.getElementById('food-modal-title').textContent='✏️ دەستکاری';document.getElementById('f-emoji').value=f.emoji||'';document.getElementById('emoji-prev').textContent=f.emoji||'🍽️';document.getElementById('f-name-ku').value=f.name_ku||'';document.getElementById('f-name-en').value=f.name_en||'';document.getElementById('f-cat').value=f.category||'protein';document.getElementById('f-ok').style.display='none';document.getElementById('f-err').style.display='none';document.getElementById('unit-rows').innerHTML='';unitRowCount=0;(f.units||[]).forEach(u=>addUnitRow(u));if(!(f.units?.length))addUnitRow();document.getElementById('modal-food').classList.add('open');};
+    window.openFoodModal=()=>{editFoodId=null;document.getElementById('food-modal-title').textContent='🍽️ زیادکردنی خواردن';['f-emoji','f-name-ku','f-name-en'].forEach(id=>document.getElementById(id).value='');document.getElementById('emoji-prev').textContent='🍽️';document.getElementById('f-cat').value='protein';document.getElementById('f-ok').style.display='none';document.getElementById('f-err').style.display='none';document.getElementById('unit-rows').innerHTML='';unitRowCount=0;addUnitRow();
+      // Reset vitamins & minerals
+      ['v-A','v-C','v-D','v-E','v-K','v-B1','v-B2','v-B3','v-B6','v-B9','v-B12'].forEach(id=>document.getElementById(id).value='');
+      ['m-calcium','m-iron','m-magnesium','m-phosphorus','m-potassium','m-sodium','m-zinc','m-selenium'].forEach(id=>document.getElementById(id).value='');
+      document.getElementById('modal-food').classList.add('open');};
+    window.openEditFood=id=>{const f=foods.find(x=>x.id===id);if(!f)return;editFoodId=id;document.getElementById('food-modal-title').textContent='✏️ دەستکاری';document.getElementById('f-emoji').value=f.emoji||'';document.getElementById('emoji-prev').textContent=f.emoji||'🍽️';document.getElementById('f-name-ku').value=f.name_ku||'';document.getElementById('f-name-en').value=f.name_en||'';document.getElementById('f-cat').value=f.category||'protein';document.getElementById('f-ok').style.display='none';document.getElementById('f-err').style.display='none';document.getElementById('unit-rows').innerHTML='';unitRowCount=0;(f.units||[]).forEach(u=>addUnitRow(u));if(!(f.units?.length))addUnitRow();
+      // Populate vitamins & minerals
+      const v=f.vitamins||{};
+      document.getElementById('v-A').value=v.A||'';document.getElementById('v-C').value=v.C||'';document.getElementById('v-D').value=v.D||'';document.getElementById('v-E').value=v.E||'';document.getElementById('v-K').value=v.K||'';
+      document.getElementById('v-B1').value=v.B1||'';document.getElementById('v-B2').value=v.B2||'';document.getElementById('v-B3').value=v.B3||'';document.getElementById('v-B6').value=v.B6||'';document.getElementById('v-B9').value=v.B9||'';document.getElementById('v-B12').value=v.B12||'';
+      const m=f.minerals||{};
+      document.getElementById('m-calcium').value=m.calcium||'';document.getElementById('m-iron').value=m.iron||'';document.getElementById('m-magnesium').value=m.magnesium||'';document.getElementById('m-phosphorus').value=m.phosphorus||'';
+      document.getElementById('m-potassium').value=m.potassium||'';document.getElementById('m-sodium').value=m.sodium||'';document.getElementById('m-zinc').value=m.zinc||'';document.getElementById('m-selenium').value=m.selenium||'';
+      document.getElementById('modal-food').classList.add('open');};
 
     window.saveFood=async()=>{
       const emoji=document.getElementById('f-emoji').value.trim()||'🍽️';
@@ -700,7 +795,9 @@
       if(!nameKu){errEl.textContent='تکایە ناوی کوردی بنووسە';errEl.style.display='block';return;}
       if(!units.length){errEl.textContent='لانیکەم یەک یەکەی پێوانە زیاد بکە';errEl.style.display='block';return;}
       const btn=document.getElementById('btn-save-food');btn.disabled=true;btn.textContent='⏳...';errEl.style.display='none';
-      const data={emoji,name_ku:nameKu,name_en:nameEn,category:cat,units,active:true,updatedAt:new Date().toISOString()};
+      const vitamins=collectVitamins();
+      const minerals=collectMinerals();
+      const data={emoji,name_ku:nameKu,name_en:nameEn,category:cat,units,vitamins,minerals,active:true,updatedAt:new Date().toISOString()};
       try{
         if(editFoodId){await updateDoc(doc(db,'foods',editFoodId),data);const i=foods.findIndex(f=>f.id===editFoodId);if(i>=0)foods[i]={...foods[i],...data};toast('✅ نوێکرایەوە','green');}
         else{data.createdAt=new Date().toISOString();const ref=await addDoc(collection(db,'foods'),data);foods.unshift({id:ref.id,...data});toast('✅ خواردنەکە زیاد کرا','green');}
@@ -744,10 +841,37 @@ Format:
           "carbs": number,
           "fat": number
         }
-      ]
+      ],
+      "vitamins": {
+        "A": number,
+        "C": number,
+        "D": number,
+        "E": number,
+        "K": number,
+        "B1": number,
+        "B2": number,
+        "B3": number,
+        "B6": number,
+        "B9": number,
+        "B12": number
+      },
+      "minerals": {
+        "calcium": number,
+        "iron": number,
+        "magnesium": number,
+        "phosphorus": number,
+        "potassium": number,
+        "sodium": number,
+        "zinc": number,
+        "selenium": number
+      }
     }
   ]
 }
+
+CRITICAL: vitamins and minerals values must be in milligrams (mg) per 100g of the food.
+If a vitamin is not present or negligible, use 0.
+Use accurate USDA nutritional database values.
 
 CRITICAL RULES for units - choose intelligently based on the food:
 - LIQUIDS (milk, juice, water, tea, coffee): use ["ملیلیتر (ml)" per 100ml, "لیتر (L)" per 1000ml, "کوێژ (cup)" per 240ml]
@@ -815,6 +939,14 @@ The user's request: ${prompt}`;
         const isApproved=f._status==='approved';
         const isSkipped=f._status==='skipped';
         const units=(f.units||[]).map(u=>`<div class="fc-unit-row"><span class="fc-unit-name">${u.type}</span><span class="fc-unit-macros">${u.cal}cal P:${u.protein}g C:${u.carbs}g F:${u.fat}g</span></div>`).join('');
+        const vits=f.vitamins||{};
+        const mins=f.minerals||{};
+        const vitTags=[];
+        if(vits.A>0)vitTags.push('A');if(vits.C>0)vitTags.push('C');if(vits.D>0)vitTags.push('D');if(vits.E>0)vitTags.push('E');if(vits.K>0)vitTags.push('K');if(vits.B1>0)vitTags.push('B1');if(vits.B2>0)vitTags.push('B2');if(vits.B3>0)vitTags.push('B3');if(vits.B6>0)vitTags.push('B6');if(vits.B9>0)vitTags.push('B9');if(vits.B12>0)vitTags.push('B12');
+        const minTags=[];
+        if(mins.calcium>0)minTags.push('Ca');if(mins.iron>0)minTags.push('Fe');if(mins.magnesium>0)minTags.push('Mg');if(mins.phosphorus>0)minTags.push('P');if(mins.potassium>0)minTags.push('K');if(mins.sodium>0)minTags.push('Na');if(mins.zinc>0)minTags.push('Zn');if(mins.selenium>0)minTags.push('Se');
+        const hasMicro=vitTags.length+minTags.length>0;
+        const microHtml=hasMicro?`<div class="fc-micro"><span class="fc-micro-label">🧬 ڤیتامین & کانزا (mg/100g):</span><div class="fc-micro-tags">${vitTags.map(t=>`<span class="micro-tag vit">${t}</span>`).join('')}${minTags.map(t=>`<span class="micro-tag min">${t}</span>`).join('')}</div></div>`:'';
         return`<div class="food-card${isApproved?' approved':isSkipped?' skipped':''}" id="fc-${i}">
           <div class="fc-top">
             <span class="fc-emoji">${f.emoji||'🍽️'}</span>
@@ -825,6 +957,7 @@ The user's request: ${prompt}`;
             </div>
           </div>
           <div class="fc-units">${units}</div>
+          ${microHtml}
           <div class="fc-actions">
             <button class="fc-btn fc-approve${isApproved?' done':''}" onclick="approveFood(${i})">${isApproved?'✅ پەسەندکرا':'✓ پەسەند'}</button>
             <button class="fc-btn fc-edit" onclick="editAIFood(${i})">✏️</button>
