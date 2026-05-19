@@ -3,20 +3,14 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/5UvOUNctbLufpuwu43HX",
       "fields": {
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:32.045Z"
+        "emoji": {
+          "stringValue": "🍇"
         },
         "updatedAt": {
           "stringValue": "2026-05-14T20:08:32.045Z"
         },
-        "active": {
-          "booleanValue": true
-        },
-        "category": {
-          "stringValue": "fruit"
-        },
-        "name_ku": {
-          "stringValue": "پۆمە"
+        "name_en": {
+          "stringValue": "Grape"
         },
         "units": {
           "arrayValue": {
@@ -24,17 +18,17 @@
               {
                 "mapValue": {
                   "fields": {
-                    "fat": {
-                      "doubleValue": 0.2
-                    },
                     "cal": {
                       "integerValue": "67"
+                    },
+                    "type": {
+                      "stringValue": "دانە"
                     },
                     "carbs": {
                       "doubleValue": 17.2
                     },
-                    "type": {
-                      "stringValue": "دانە"
+                    "fat": {
+                      "doubleValue": 0.2
                     },
                     "protein": {
                       "doubleValue": 0.7
@@ -45,17 +39,17 @@
               {
                 "mapValue": {
                   "fields": {
+                    "type": {
+                      "stringValue": "گرام (g)"
+                    },
                     "cal": {
                       "integerValue": "67"
-                    },
-                    "fat": {
-                      "doubleValue": 0.2
                     },
                     "carbs": {
                       "doubleValue": 17.2
                     },
-                    "type": {
-                      "stringValue": "گرام (g)"
+                    "fat": {
+                      "doubleValue": 0.2
                     },
                     "protein": {
                       "doubleValue": 0.7
@@ -66,11 +60,17 @@
             ]
           }
         },
-        "emoji": {
-          "stringValue": "🍇"
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:32.045Z"
         },
-        "name_en": {
-          "stringValue": "Grape"
+        "category": {
+          "stringValue": "fruit"
+        },
+        "active": {
+          "booleanValue": true
+        },
+        "name_ku": {
+          "stringValue": "پۆمە"
         }
       },
       "createTime": "2026-05-14T20:08:32.151191Z",
@@ -79,23 +79,14 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/BoVC2s95ozzkz8PmLiMO",
       "fields": {
-        "emoji": {
-          "stringValue": "🍌"
+        "name_ku": {
+          "stringValue": "مۆز"
         },
-        "name_en": {
-          "stringValue": "Banana"
+        "category": {
+          "stringValue": "fruit"
         },
         "active": {
           "booleanValue": true
-        },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:31.864Z"
-        },
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:31.864Z"
-        },
-        "name_ku": {
-          "stringValue": "مۆز"
         },
         "units": {
           "arrayValue": {
@@ -106,8 +97,8 @@
                     "protein": {
                       "doubleValue": 1.3
                     },
-                    "type": {
-                      "stringValue": "دانە"
+                    "fat": {
+                      "doubleValue": 0.3
                     },
                     "carbs": {
                       "doubleValue": 26.9
@@ -115,8 +106,8 @@
                     "cal": {
                       "integerValue": "105"
                     },
-                    "fat": {
-                      "doubleValue": 0.3
+                    "type": {
+                      "stringValue": "دانە"
                     }
                   }
                 }
@@ -124,20 +115,20 @@
               {
                 "mapValue": {
                   "fields": {
+                    "type": {
+                      "stringValue": "گرام (g)"
+                    },
                     "cal": {
                       "integerValue": "105"
-                    },
-                    "fat": {
-                      "doubleValue": 0.3
                     },
                     "carbs": {
                       "doubleValue": 26.9
                     },
-                    "type": {
-                      "stringValue": "گرام (g)"
-                    },
                     "protein": {
                       "doubleValue": 1.3
+                    },
+                    "fat": {
+                      "doubleValue": 0.3
                     }
                   }
                 }
@@ -145,8 +136,17 @@
             ]
           }
         },
-        "category": {
-          "stringValue": "fruit"
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:31.864Z"
+        },
+        "name_en": {
+          "stringValue": "Banana"
+        },
+        "emoji": {
+          "stringValue": "🍌"
+        },
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:31.864Z"
         }
       },
       "createTime": "2026-05-14T20:08:31.972707Z",
@@ -155,23 +155,20 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/IOdiUrzRYF4UYaVlvr9x",
       "fields": {
-        "emoji": {
-          "stringValue": "🥗"
+        "name_ku": {
+          "stringValue": "سەوز"
         },
-        "name_en": {
-          "stringValue": "Spinach"
+        "category": {
+          "stringValue": "veggie"
         },
         "active": {
           "booleanValue": true
         },
+        "name_en": {
+          "stringValue": "Spinach"
+        },
         "createdAt": {
           "stringValue": "2026-05-14T20:08:33.693Z"
-        },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:33.693Z"
-        },
-        "name_ku": {
-          "stringValue": "سەوز"
         },
         "units": {
           "arrayValue": {
@@ -179,11 +176,11 @@
               {
                 "mapValue": {
                   "fields": {
+                    "fat": {
+                      "doubleValue": 0.4
+                    },
                     "protein": {
                       "doubleValue": 3.2
-                    },
-                    "type": {
-                      "stringValue": "گرام (g)"
                     },
                     "carbs": {
                       "doubleValue": 3.6
@@ -191,8 +188,8 @@
                     "cal": {
                       "integerValue": "23"
                     },
-                    "fat": {
-                      "doubleValue": 0.4
+                    "type": {
+                      "stringValue": "گرام (g)"
                     }
                   }
                 }
@@ -200,8 +197,11 @@
             ]
           }
         },
-        "category": {
-          "stringValue": "veggie"
+        "emoji": {
+          "stringValue": "🥗"
+        },
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:33.693Z"
         }
       },
       "createTime": "2026-05-14T20:08:33.796889Z",
@@ -213,32 +213,26 @@
         "name_en": {
           "stringValue": "Broccoli"
         },
-        "emoji": {
-          "stringValue": "🥦"
-        },
-        "name_ku": {
-          "stringValue": "قەڵام"
-        },
         "units": {
           "arrayValue": {
             "values": [
               {
                 "mapValue": {
                   "fields": {
+                    "fat": {
+                      "doubleValue": 0.6
+                    },
+                    "protein": {
+                      "doubleValue": 2.8
+                    },
                     "carbs": {
                       "doubleValue": 6.6
                     },
                     "cal": {
                       "integerValue": "34"
                     },
-                    "fat": {
-                      "doubleValue": 0.6
-                    },
                     "type": {
                       "stringValue": "گرام (g)"
-                    },
-                    "protein": {
-                      "doubleValue": 2.8
                     }
                   }
                 }
@@ -246,17 +240,23 @@
             ]
           }
         },
-        "category": {
-          "stringValue": "veggie"
-        },
         "createdAt": {
           "stringValue": "2026-05-14T20:08:34.220Z"
+        },
+        "emoji": {
+          "stringValue": "🥦"
         },
         "updatedAt": {
           "stringValue": "2026-05-14T20:08:34.220Z"
         },
         "active": {
           "booleanValue": true
+        },
+        "category": {
+          "stringValue": "veggie"
+        },
+        "name_ku": {
+          "stringValue": "قەڵام"
         }
       },
       "createTime": "2026-05-14T20:08:34.334126Z",
@@ -268,6 +268,9 @@
         "category": {
           "stringValue": "veggie"
         },
+        "active": {
+          "booleanValue": true
+        },
         "name_ku": {
           "stringValue": "بەتاتە"
         },
@@ -277,20 +280,20 @@
               {
                 "mapValue": {
                   "fields": {
-                    "carbs": {
-                      "integerValue": "17"
+                    "protein": {
+                      "integerValue": "2"
                     },
                     "fat": {
                       "integerValue": "0"
                     },
-                    "cal": {
-                      "integerValue": "70"
-                    },
-                    "protein": {
-                      "integerValue": "2"
+                    "carbs": {
+                      "integerValue": "17"
                     },
                     "type": {
                       "stringValue": "گرام (g)"
+                    },
+                    "cal": {
+                      "integerValue": "70"
                     }
                   }
                 }
@@ -301,17 +304,14 @@
         "createdAt": {
           "stringValue": "2026-05-14T20:08:32.674Z"
         },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:32.674Z"
-        },
-        "active": {
-          "booleanValue": true
-        },
         "name_en": {
           "stringValue": "Potato"
         },
         "emoji": {
           "stringValue": "🥔"
+        },
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:32.674Z"
         }
       },
       "createTime": "2026-05-14T20:08:32.858913Z",
@@ -320,17 +320,20 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/SQyRgV9xp3Qk5Zv1CFot",
       "fields": {
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:32.933Z"
+        "name_ku": {
+          "stringValue": "گەزەڕ"
         },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:32.933Z"
+        "category": {
+          "stringValue": "veggie"
         },
         "active": {
           "booleanValue": true
         },
-        "name_ku": {
-          "stringValue": "گەزەڕ"
+        "name_en": {
+          "stringValue": "Carrot"
+        },
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:32.933Z"
         },
         "units": {
           "arrayValue": {
@@ -341,14 +344,14 @@
                     "protein": {
                       "doubleValue": 0.9
                     },
-                    "type": {
-                      "stringValue": "گرام (g)"
+                    "fat": {
+                      "doubleValue": 0.2
                     },
                     "carbs": {
                       "doubleValue": 9.2
                     },
-                    "fat": {
-                      "doubleValue": 0.2
+                    "type": {
+                      "stringValue": "گرام (g)"
                     },
                     "cal": {
                       "integerValue": "41"
@@ -359,14 +362,11 @@
             ]
           }
         },
-        "category": {
-          "stringValue": "veggie"
-        },
         "emoji": {
           "stringValue": "🥕"
         },
-        "name_en": {
-          "stringValue": "Carrot"
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:32.933Z"
         }
       },
       "createTime": "2026-05-14T20:08:33.040242Z",
@@ -375,17 +375,14 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/bjycHzuSQQAe6QwVZEB5",
       "fields": {
-        "name_en": {
-          "stringValue": "Eggplant"
-        },
-        "emoji": {
-          "stringValue": "🍆"
+        "name_ku": {
+          "stringValue": "بەنگەن"
         },
         "category": {
           "stringValue": "veggie"
         },
-        "name_ku": {
-          "stringValue": "بەنگەن"
+        "active": {
+          "booleanValue": true
         },
         "units": {
           "arrayValue": {
@@ -393,20 +390,20 @@
               {
                 "mapValue": {
                   "fields": {
-                    "protein": {
-                      "doubleValue": 0.9
-                    },
                     "type": {
                       "stringValue": "گرام (g)"
-                    },
-                    "fat": {
-                      "doubleValue": 0.2
                     },
                     "cal": {
                       "integerValue": "25"
                     },
                     "carbs": {
                       "integerValue": "6"
+                    },
+                    "protein": {
+                      "doubleValue": 0.9
+                    },
+                    "fat": {
+                      "doubleValue": 0.2
                     }
                   }
                 }
@@ -414,13 +411,16 @@
             ]
           }
         },
-        "active": {
-          "booleanValue": true
-        },
-        "updatedAt": {
+        "createdAt": {
           "stringValue": "2026-05-14T20:08:33.119Z"
         },
-        "createdAt": {
+        "name_en": {
+          "stringValue": "Eggplant"
+        },
+        "emoji": {
+          "stringValue": "🍆"
+        },
+        "updatedAt": {
           "stringValue": "2026-05-14T20:08:33.119Z"
         }
       },
@@ -430,17 +430,20 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/bkwaI6bgH8eccgM3OJyG",
       "fields": {
-        "name_en": {
-          "stringValue": "Onion"
-        },
-        "emoji": {
-          "stringValue": "🧅"
+        "name_ku": {
+          "stringValue": "شۆڵ"
         },
         "category": {
           "stringValue": "veggie"
         },
-        "name_ku": {
-          "stringValue": "شۆڵ"
+        "active": {
+          "booleanValue": true
+        },
+        "name_en": {
+          "stringValue": "Onion"
+        },
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:33.507Z"
         },
         "units": {
           "arrayValue": {
@@ -448,20 +451,20 @@
               {
                 "mapValue": {
                   "fields": {
+                    "cal": {
+                      "integerValue": "44"
+                    },
                     "type": {
                       "stringValue": "گرام (g)"
-                    },
-                    "protein": {
-                      "doubleValue": 1.1
                     },
                     "carbs": {
                       "doubleValue": 11.6
                     },
-                    "cal": {
-                      "integerValue": "44"
-                    },
                     "fat": {
                       "doubleValue": 0.1
+                    },
+                    "protein": {
+                      "doubleValue": 1.1
                     }
                   }
                 }
@@ -469,13 +472,10 @@
             ]
           }
         },
-        "active": {
-          "booleanValue": true
+        "emoji": {
+          "stringValue": "🧅"
         },
         "updatedAt": {
-          "stringValue": "2026-05-14T20:08:33.507Z"
-        },
-        "createdAt": {
           "stringValue": "2026-05-14T20:08:33.507Z"
         }
       },
@@ -485,8 +485,17 @@
     {
       "name": "projects/appmass-f26bd/databases/(default)/documents/foods/gvmTwxviMmiW98f8AVwT",
       "fields": {
-        "category": {
-          "stringValue": "veggie"
+        "emoji": {
+          "stringValue": "🥬"
+        },
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:33.313Z"
+        },
+        "name_en": {
+          "stringValue": "Cabbage"
+        },
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:33.313Z"
         },
         "units": {
           "arrayValue": {
@@ -494,8 +503,8 @@
               {
                 "mapValue": {
                   "fields": {
-                    "type": {
-                      "stringValue": "گرام (g)"
+                    "fat": {
+                      "doubleValue": 0.1
                     },
                     "protein": {
                       "doubleValue": 1.3
@@ -506,215 +515,8 @@
                     "cal": {
                       "integerValue": "22"
                     },
-                    "fat": {
-                      "doubleValue": 0.1
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "name_ku": {
-          "stringValue": "کەلەم"
-        },
-        "active": {
-          "booleanValue": true
-        },
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:33.313Z"
-        },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:33.313Z"
-        },
-        "name_en": {
-          "stringValue": "Cabbage"
-        },
-        "emoji": {
-          "stringValue": "🥬"
-        }
-      },
-      "createTime": "2026-05-14T20:08:33.432823Z",
-      "updateTime": "2026-05-14T20:08:33.432823Z"
-    },
-    {
-      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/mmPpL9pkZLz9fdoLmgmj",
-      "fields": {
-        "name_en": {
-          "stringValue": "Pomegranate"
-        },
-        "emoji": {
-          "stringValue": "🍊"
-        },
-        "category": {
-          "stringValue": "fruit"
-        },
-        "units": {
-          "arrayValue": {
-            "values": [
-              {
-                "mapValue": {
-                  "fields": {
-                    "type": {
-                      "stringValue": "دانە"
-                    },
-                    "protein": {
-                      "doubleValue": 1.7
-                    },
-                    "carbs": {
-                      "doubleValue": 18.7
-                    },
-                    "fat": {
-                      "doubleValue": 1.2
-                    },
-                    "cal": {
-                      "integerValue": "83"
-                    }
-                  }
-                }
-              },
-              {
-                "mapValue": {
-                  "fields": {
-                    "carbs": {
-                      "doubleValue": 18.7
-                    },
-                    "cal": {
-                      "integerValue": "83"
-                    },
-                    "fat": {
-                      "doubleValue": 1.2
-                    },
-                    "protein": {
-                      "doubleValue": 1.7
-                    },
                     "type": {
                       "stringValue": "گرام (g)"
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "name_ku": {
-          "stringValue": "ئەنار"
-        },
-        "active": {
-          "booleanValue": true
-        },
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:32.224Z"
-        },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:32.224Z"
-        }
-      },
-      "createTime": "2026-05-14T20:08:32.342657Z",
-      "updateTime": "2026-05-14T20:08:32.342657Z"
-    },
-    {
-      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/qrAsURX3NJ3z70wTlzWM",
-      "fields": {
-        "category": {
-          "stringValue": "fruit"
-        },
-        "units": {
-          "arrayValue": {
-            "values": [
-              {
-                "mapValue": {
-                  "fields": {
-                    "carbs": {
-                      "doubleValue": 13.8
-                    },
-                    "fat": {
-                      "doubleValue": 0.2
-                    },
-                    "cal": {
-                      "integerValue": "52"
-                    },
-                    "type": {
-                      "stringValue": "دانە"
-                    },
-                    "protein": {
-                      "doubleValue": 0.3
-                    }
-                  }
-                }
-              },
-              {
-                "mapValue": {
-                  "fields": {
-                    "fat": {
-                      "doubleValue": 0.2
-                    },
-                    "cal": {
-                      "integerValue": "52"
-                    },
-                    "carbs": {
-                      "doubleValue": 13.8
-                    },
-                    "type": {
-                      "stringValue": "گرام (g)"
-                    },
-                    "protein": {
-                      "doubleValue": 0.3
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "name_ku": {
-          "stringValue": "سێو"
-        },
-        "active": {
-          "booleanValue": true
-        },
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:31.285Z"
-        },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:31.285Z"
-        },
-        "name_en": {
-          "stringValue": "Apple"
-        },
-        "emoji": {
-          "stringValue": "🍎"
-        }
-      },
-      "createTime": "2026-05-14T20:08:31.789136Z",
-      "updateTime": "2026-05-14T20:08:31.789136Z"
-    },
-    {
-      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/sgMYXtn76bGDqs5u5jaQ",
-      "fields": {
-        "name_ku": {
-          "stringValue": "بەتاتی سۆڕ"
-        },
-        "units": {
-          "arrayValue": {
-            "values": [
-              {
-                "mapValue": {
-                  "fields": {
-                    "carbs": {
-                      "doubleValue": 20.1
-                    },
-                    "cal": {
-                      "integerValue": "86"
-                    },
-                    "fat": {
-                      "doubleValue": 0.2
-                    },
-                    "type": {
-                      "stringValue": "گرام (g)"
-                    },
-                    "protein": {
-                      "doubleValue": 1.6
                     }
                   }
                 }
@@ -725,36 +527,27 @@
         "category": {
           "stringValue": "veggie"
         },
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:33.872Z"
-        },
-        "updatedAt": {
-          "stringValue": "2026-05-14T20:08:33.872Z"
-        },
         "active": {
           "booleanValue": true
         },
-        "name_en": {
-          "stringValue": "Sweet Potato"
-        },
-        "emoji": {
-          "stringValue": "🥔"
+        "name_ku": {
+          "stringValue": "کەلەم"
         }
       },
-      "createTime": "2026-05-14T20:08:33.973779Z",
-      "updateTime": "2026-05-14T20:08:33.973779Z"
+      "createTime": "2026-05-14T20:08:33.432823Z",
+      "updateTime": "2026-05-14T20:08:33.432823Z"
     },
     {
-      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/uxmiUrJNXjtViva0V8tR",
+      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/mmPpL9pkZLz9fdoLmgmj",
       "fields": {
-        "name_en": {
-          "stringValue": "Fig"
-        },
         "emoji": {
-          "stringValue": "🍜"
+          "stringValue": "🍊"
         },
-        "category": {
-          "stringValue": "fruit"
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:32.224Z"
+        },
+        "name_en": {
+          "stringValue": "Pomegranate"
         },
         "units": {
           "arrayValue": {
@@ -762,20 +555,20 @@
               {
                 "mapValue": {
                   "fields": {
-                    "fat": {
-                      "doubleValue": 0.2
-                    },
                     "cal": {
-                      "integerValue": "74"
-                    },
-                    "carbs": {
-                      "doubleValue": 19.2
+                      "integerValue": "83"
                     },
                     "type": {
                       "stringValue": "دانە"
                     },
+                    "carbs": {
+                      "doubleValue": 18.7
+                    },
                     "protein": {
-                      "doubleValue": 0.8
+                      "doubleValue": 1.7
+                    },
+                    "fat": {
+                      "doubleValue": 1.2
                     }
                   }
                 }
@@ -784,19 +577,19 @@
                 "mapValue": {
                   "fields": {
                     "protein": {
-                      "doubleValue": 0.8
+                      "doubleValue": 1.7
+                    },
+                    "fat": {
+                      "doubleValue": 1.2
+                    },
+                    "carbs": {
+                      "doubleValue": 18.7
+                    },
+                    "cal": {
+                      "integerValue": "83"
                     },
                     "type": {
                       "stringValue": "گرام (g)"
-                    },
-                    "carbs": {
-                      "doubleValue": 19.2
-                    },
-                    "fat": {
-                      "doubleValue": 0.2
-                    },
-                    "cal": {
-                      "integerValue": "74"
                     }
                   }
                 }
@@ -804,14 +597,221 @@
             ]
           }
         },
-        "name_ku": {
-          "stringValue": "ھەنجیر"
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:32.224Z"
+        },
+        "category": {
+          "stringValue": "fruit"
         },
         "active": {
           "booleanValue": true
         },
+        "name_ku": {
+          "stringValue": "ئەنار"
+        }
+      },
+      "createTime": "2026-05-14T20:08:32.342657Z",
+      "updateTime": "2026-05-14T20:08:32.342657Z"
+    },
+    {
+      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/qrAsURX3NJ3z70wTlzWM",
+      "fields": {
+        "name_en": {
+          "stringValue": "Apple"
+        },
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:31.285Z"
+        },
+        "units": {
+          "arrayValue": {
+            "values": [
+              {
+                "mapValue": {
+                  "fields": {
+                    "cal": {
+                      "integerValue": "52"
+                    },
+                    "type": {
+                      "stringValue": "دانە"
+                    },
+                    "carbs": {
+                      "doubleValue": 13.8
+                    },
+                    "fat": {
+                      "doubleValue": 0.2
+                    },
+                    "protein": {
+                      "doubleValue": 0.3
+                    }
+                  }
+                }
+              },
+              {
+                "mapValue": {
+                  "fields": {
+                    "carbs": {
+                      "doubleValue": 13.8
+                    },
+                    "fat": {
+                      "doubleValue": 0.2
+                    },
+                    "protein": {
+                      "doubleValue": 0.3
+                    },
+                    "cal": {
+                      "integerValue": "52"
+                    },
+                    "type": {
+                      "stringValue": "گرام (g)"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "emoji": {
+          "stringValue": "🍎"
+        },
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:31.285Z"
+        },
+        "category": {
+          "stringValue": "fruit"
+        },
+        "active": {
+          "booleanValue": true
+        },
+        "name_ku": {
+          "stringValue": "سێو"
+        }
+      },
+      "createTime": "2026-05-14T20:08:31.789136Z",
+      "updateTime": "2026-05-14T20:08:31.789136Z"
+    },
+    {
+      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/sgMYXtn76bGDqs5u5jaQ",
+      "fields": {
+        "category": {
+          "stringValue": "veggie"
+        },
+        "active": {
+          "booleanValue": true
+        },
+        "name_ku": {
+          "stringValue": "بەتاتی سۆڕ"
+        },
+        "emoji": {
+          "stringValue": "🥔"
+        },
+        "updatedAt": {
+          "stringValue": "2026-05-14T20:08:33.872Z"
+        },
+        "name_en": {
+          "stringValue": "Sweet Potato"
+        },
+        "units": {
+          "arrayValue": {
+            "values": [
+              {
+                "mapValue": {
+                  "fields": {
+                    "type": {
+                      "stringValue": "گرام (g)"
+                    },
+                    "cal": {
+                      "integerValue": "86"
+                    },
+                    "protein": {
+                      "doubleValue": 1.6
+                    },
+                    "fat": {
+                      "doubleValue": 0.2
+                    },
+                    "carbs": {
+                      "doubleValue": 20.1
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:33.872Z"
+        }
+      },
+      "createTime": "2026-05-14T20:08:33.973779Z",
+      "updateTime": "2026-05-14T20:08:33.973779Z"
+    },
+    {
+      "name": "projects/appmass-f26bd/databases/(default)/documents/foods/uxmiUrJNXjtViva0V8tR",
+      "fields": {
+        "name_ku": {
+          "stringValue": "ھەنجیر"
+        },
+        "category": {
+          "stringValue": "fruit"
+        },
+        "active": {
+          "booleanValue": true
+        },
+        "name_en": {
+          "stringValue": "Fig"
+        },
         "createdAt": {
           "stringValue": "2026-05-14T20:08:32.417Z"
+        },
+        "units": {
+          "arrayValue": {
+            "values": [
+              {
+                "mapValue": {
+                  "fields": {
+                    "type": {
+                      "stringValue": "دانە"
+                    },
+                    "cal": {
+                      "integerValue": "74"
+                    },
+                    "carbs": {
+                      "doubleValue": 19.2
+                    },
+                    "protein": {
+                      "doubleValue": 0.8
+                    },
+                    "fat": {
+                      "doubleValue": 0.2
+                    }
+                  }
+                }
+              },
+              {
+                "mapValue": {
+                  "fields": {
+                    "fat": {
+                      "doubleValue": 0.2
+                    },
+                    "protein": {
+                      "doubleValue": 0.8
+                    },
+                    "carbs": {
+                      "doubleValue": 19.2
+                    },
+                    "cal": {
+                      "integerValue": "74"
+                    },
+                    "type": {
+                      "stringValue": "گرام (g)"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "emoji": {
+          "stringValue": "🍜"
         },
         "updatedAt": {
           "stringValue": "2026-05-14T20:08:32.417Z"
@@ -826,8 +826,17 @@
         "category": {
           "stringValue": "veggie"
         },
+        "active": {
+          "booleanValue": true
+        },
         "name_ku": {
           "stringValue": "گەڵا"
+        },
+        "name_en": {
+          "stringValue": "Cauliflower"
+        },
+        "createdAt": {
+          "stringValue": "2026-05-14T20:08:34.044Z"
         },
         "units": {
           "arrayValue": {
@@ -835,20 +844,20 @@
               {
                 "mapValue": {
                   "fields": {
+                    "protein": {
+                      "doubleValue": 2.1
+                    },
                     "fat": {
                       "doubleValue": 0.3
-                    },
-                    "cal": {
-                      "integerValue": "25"
                     },
                     "carbs": {
                       "doubleValue": 5.1
                     },
-                    "protein": {
-                      "doubleValue": 2.1
-                    },
                     "type": {
                       "stringValue": "گرام (g)"
+                    },
+                    "cal": {
+                      "integerValue": "25"
                     }
                   }
                 }
@@ -856,20 +865,11 @@
             ]
           }
         },
-        "active": {
-          "booleanValue": true
-        },
-        "createdAt": {
-          "stringValue": "2026-05-14T20:08:34.044Z"
+        "emoji": {
+          "stringValue": "🥦"
         },
         "updatedAt": {
           "stringValue": "2026-05-14T20:08:34.044Z"
-        },
-        "name_en": {
-          "stringValue": "Cauliflower"
-        },
-        "emoji": {
-          "stringValue": "🥦"
         }
       },
       "createTime": "2026-05-14T20:08:34.148731Z",
