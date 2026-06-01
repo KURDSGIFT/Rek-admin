@@ -1352,27 +1352,35 @@
       margin-bottom: 4px;
     }
 
-    .fc-micro-tags {
+    .fc-micro-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 4px;
+      gap: 6px;
+      margin-top: 4px;
     }
 
-    .micro-tag {
+    .micro-item {
       font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 10px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
     }
 
-    .micro-tag.vit {
-      background: rgba(14, 165, 233, 0.15);
-      color: var(--blue);
+    .micro-item b {
+      margin-left: 2px;
     }
 
-    .micro-tag.min {
-      background: rgba(16, 185, 129, 0.15);
+    .micro-item.vit {
+      background: var(--green-dim);
       color: var(--green);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .micro-item.min {
+      background: var(--orange-dim);
+      color: var(--orange);
+      border-color: rgba(245, 158, 11, 0.2);
     }
 
     .vit-indicator {
@@ -2168,13 +2176,13 @@ Format:
 {
   "foods": [
     {
-      "name_ku": "Kurdish name",
+      "name_ku": "ناوی کوردی زۆر ورد و جوان",
       "name_en": "English name",
       "emoji": "single appropriate emoji",
       "category": "protein|carb|fat|fruit|veggie|dairy|drink|other",
       "units": [
         {
-          "type": "unit name in Kurdish",
+          "type": "ناوی یەکە بە کوردی",
           "cal": number,
           "protein": number,
           "carbs": number,
@@ -2182,52 +2190,41 @@ Format:
         }
       ],
       "vitamins": {
-        "A": number,
-        "C": number,
-        "D": number,
-        "E": number,
-        "K": number,
-        "B1": number,
-        "B2": number,
-        "B3": number,
-        "B6": number,
-        "B9": number,
-        "B12": number
+        "A": number, "C": number, "D": number, "E": number, "K": number,
+        "B1": number, "B2": number, "B3": number, "B6": number, "B9": number, "B12": number
       },
       "minerals": {
-        "calcium": number,
-        "iron": number,
-        "magnesium": number,
-        "phosphorus": number,
-        "potassium": number,
-        "sodium": number,
-        "zinc": number,
-        "selenium": number
+        "calcium": number, "iron": number, "magnesium": number, "phosphorus": number,
+        "potassium": number, "sodium": number, "zinc": number, "selenium": number
       }
     }
   ]
 }
 
-CRITICAL: vitamins and minerals values must be in milligrams (mg) per 100g of the food.
-If a vitamin is not present or negligible, use 0.
-Use accurate USDA nutritional database values.
+CRITICAL RULES FOR KURDISH NAMES:
+- Use standard Sorani Kurdish (Central Kurdish).
+- Use correct Kurdish characters: ئ, ێ, ۆ, ڕ, ڵ, ڤ, گ, چ, پ, ژ.
+- Ensure the name is natural and commonly used in Kurdistan (e.g., use "برنج" instead of a literal translation).
+- The name must be spelled correctly and beautifully.
 
-CRITICAL RULES for units - choose intelligently based on the food:
-- LIQUIDS (milk, juice, water, tea, coffee): use ["ملیلیتر (ml)" per 100ml, "لیتر (L)" per 1000ml, "کوێژ (cup)" per 240ml]
+CRITICAL NUTRITIONAL RULES:
+- Vitamins and minerals values must be in milligrams (mg) per 100g of the food.
+- Use accurate USDA/standard nutritional database values.
+
+CRITICAL RULES for units:
+- LIQUIDS: use ["ملیلیتر (ml)" per 100ml, "لیتر (L)" per 1000ml, "پەرداخ (cup)" per 240ml]
 - EGGS: use ["دانە" per 1 egg ~50g, "گرام (g)" per 100g]
 - BREAD/SLICES: use ["دانە" per 1 slice, "گرام (g)" per 100g]
-- FRUITS (apple, banana, orange): use ["دانە" per 1 medium fruit, "گرام (g)" per 100g]
-- NUTS/SEEDS: use ["گرام (g)" per 100g, "چەمچەی مەزن (tbsp)" per 15g]
-- CHEESE/DAIRY blocks: use ["گرام (g)" per 100g, "چەمچەی مەزن (tbsp)" per 15g]
-- YOGURT: use ["گرام (g)" per 100g, "کوێژ (cup)" per 245g]
-- MEAT/FISH/CHICKEN: use ["گرام (g)" per 100g] only
-- RICE/PASTA/GRAINS (cooked): use ["گرام (g)" per 100g, "کوێژ (cup)" per 180g]
-- OILS/BUTTER: use ["چەمچەی مەزن (tbsp)" per 14g, "گرام (g)" per 100g]
+- FRUITS: use ["دانە" per 1 medium fruit, "گرام (g)" per 100g]
+- NUTS/SEEDS: use ["گرام (g)" per 100g, "کەوچکی چێشت (tbsp)" per 15g]
+- CHEESE/DAIRY: use ["گرام (g)" per 100g, "کەوچکی چێشت (tbsp)" per 15g]
+- YOGURT: use ["گرام (g)" per 100g, "پەرداخ (cup)" per 245g]
+- MEAT/FISH/CHICKEN: use ["گرام (g)" per 100g]
+- RICE/PASTA/GRAINS: use ["گرام (g)" per 100g, "پەرداخ (cup)" per 180g]
+- OILS/BUTTER: use ["کەوچکی چێشت (tbsp)" per 14g, "گرام (g)" per 100g]
 - VEGETABLES: use ["گرام (g)" per 100g]
-- LEGUMES (lentils, beans): use ["گرام (g)" per 100g, "کوێژ (cup)" per 200g]
+- LEGUMES: use ["گرام (g)" per 100g, "پەرداخ (cup)" per 200g]
 
-Use accurate USDA/standard nutritional values. For Kurdish foods, use traditional recipes.
-Provide name in Kurdish (Sorani) AND English.
 The user's request: ${prompt}`;
 
       try {
@@ -2277,15 +2274,17 @@ The user's request: ${prompt}`;
       cards.innerHTML = aiResults.map((f, i) => {
         const isApproved = f._status === 'approved';
         const isSkipped = f._status === 'skipped';
-        const units = (f.units || []).map(u => `<div class="fc-unit-row"><span class="fc-unit-name">${u.type}</span><span class="fc-unit-macros">${u.cal}cal P:${u.protein}g C:${u.carbs}g F:${u.fat}g</span></div>`).join('');
+        const units = (f.units || []).map(u => `<div class="fc-unit-row"><span class="fc-unit-name">${u.type}</span><span class="fc-unit-macros"><b>${u.cal}</b> کالۆری | P:<b>${u.protein}g</b> | C:<b>${u.carbs}g</b> | F:<b>${u.fat}g</b></span></div>`).join('');
         const vits = f.vitamins || {};
         const mins = f.minerals || {};
-        const vitTags = [];
-        if (vits.A > 0) vitTags.push('A'); if (vits.C > 0) vitTags.push('C'); if (vits.D > 0) vitTags.push('D'); if (vits.E > 0) vitTags.push('E'); if (vits.K > 0) vitTags.push('K'); if (vits.B1 > 0) vitTags.push('B1'); if (vits.B2 > 0) vitTags.push('B2'); if (vits.B3 > 0) vitTags.push('B3'); if (vits.B6 > 0) vitTags.push('B6'); if (vits.B9 > 0) vitTags.push('B9'); if (vits.B12 > 0) vitTags.push('B12');
-        const minTags = [];
-        if (mins.calcium > 0) minTags.push('Ca'); if (mins.iron > 0) minTags.push('Fe'); if (mins.magnesium > 0) minTags.push('Mg'); if (mins.phosphorus > 0) minTags.push('P'); if (mins.potassium > 0) minTags.push('K'); if (mins.sodium > 0) minTags.push('Na'); if (mins.zinc > 0) minTags.push('Zn'); if (mins.selenium > 0) minTags.push('Se');
-        const hasMicro = vitTags.length + minTags.length > 0;
-        const microHtml = hasMicro ? `<div class="fc-micro"><span class="fc-micro-label">🧬 ڤیتامین & کانزا (mg/100g):</span><div class="fc-micro-tags">${vitTags.map(t => `<span class="micro-tag vit">${t}</span>`).join('')}${minTags.map(t => `<span class="micro-tag min">${t}</span>`).join('')}</div></div>` : '';
+        const vitItems = [];
+        const vNames = { A:'A', C:'C', D:'D', E:'E', K:'K', B1:'B1', B2:'B2', B3:'B3', B6:'B6', B9:'B9', B12:'B12' };
+        for (let k in vNames) { if (vits[k] > 0) vitItems.push(`${vNames[k]}:<b>${vits[k]}</b>`); }
+        const minItems = [];
+        const mNames = { calcium:'Ca', iron:'Fe', magnesium:'Mg', phosphorus:'P', potassium:'K', sodium:'Na', zinc:'Zn', selenium:'Se' };
+        for (let k in mNames) { if (mins[k] > 0) minItems.push(`${mNames[k]}:<b>${mins[k]}</b>`); }
+        const hasMicro = vitItems.length + minItems.length > 0;
+        const microHtml = hasMicro ? `<div class="fc-micro"><span class="fc-micro-label">🧬 ڤیتامین و کانزا (mg/100g):</span><div class="fc-micro-list">${vitItems.map(t => `<span class="micro-item vit">${t}</span>`).join('')}${minItems.map(t => `<span class="micro-item min">${t}</span>`).join('')}</div></div>` : '';
         return `<div class="food-card${isApproved ? ' approved' : isSkipped ? ' skipped' : ''}" id="fc-${i}">
           <div class="fc-top">
             <span class="fc-emoji">${f.emoji || '🍽️'}</span>
